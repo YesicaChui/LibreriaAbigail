@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="./css/index.css">
   <script defer src="./js/data.js"></script>
   <script defer src="./js/main.js"></script>
+  <script defer src="./js/adminProducto.js"></script>
+  <script defer src="./js/login.js"></script>
+  <script defer src="./js/otrasfunciones.js"></script>
 </head>
 
 <body>
@@ -49,6 +52,17 @@
               style="width: 30px;"></button>
         </form>
 
+        <button id="btnSesion" type="button" class="btn btn-light d-flex">
+          <div class="d-flex me-1">
+            <div class="align-self-center pt-2 ms-2">
+              <p class="m-0 text-end fw-bold" id="textoPerfil">Hola</p>
+              <p> <span id="textoSesion" >Inicia Sesión</span> </p>
+            </div>
+          </div>
+          <img class="align-self-center" src="https://cdn-icons-png.flaticon.com/512/1361/1361728.png" alt=""
+            style="width: 40px;height:50px">
+
+        </button>
         <div class="d-flex">
           <div class="align-self-center pt-2 ms-2">
             <p class="m-0">Carrito</p>
@@ -70,8 +84,27 @@
 
     <section class="container-fluid">
       <!-- Mis productos cargados dinamicamente -->
-      <div class="row" id="productos">
-<!--         
+      <div class="row " id="productos">
+        
+        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 pt-4" style="width: 18.1rem;">
+          <div class="card-body tex">
+            <h5 class="card-title m-0 fw-bold mb-3 text-center">Inserte los datos del Producto</h5>
+            <label for="inputUrl">URL Imagen - Link</label>
+            <input class="w-100 mb-2" type="text" id="inputUrl" placeholder="URL Imagen">
+            <label for="inputNombreProducto" >Nombre de Producto</label>
+            <input class="w-100  mb-2" type="text" id="inputNombreProducto" placeholder="Nombre de Producto">
+            <label for="inputDescripcion">Descripción Producto</label>
+            <input class="w-100  mb-2" type="text" id="inputDescripcion"  placeholder="Descripción Producto">
+            <label for="inputPrecio">Precio</label>
+            <input class="w-100" type="number" value=0 id="inputPrecio">
+            <label for="inputStock">Stock</label>
+            <input class="w-100 mb-3" type="number" value=0 id="inputStock">            
+            <div id="buttonsAddCar" class="d-flex justify-content-between">
+              <button type="button" class="btn btn-success fw-bold" id="btnBorrar">Guardar</button>
+              <button type="button" class="btn btn-danger fw-bold" id="btnBorrar">Cancelar</button>
+            </div>
+          </div>
+        </div>
         <div class="card col-sm-12 col-md-6 col-lg-3 m-2 d-flex align-items-center pt-5" style="width: 18.1rem; background-color: lightblue;">
           <img src="https://cdn-icons-png.flaticon.com/512/189/189689.png" 
             class="card-img-top" alt="...">
@@ -98,7 +131,7 @@
           </div>
         </div>
 
- -->      </div>
+      </div>
 
       </div>
     </section>
