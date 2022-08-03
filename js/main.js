@@ -48,10 +48,10 @@ const cargarProductos= (productos)=>{
            <p class="card-text m-0">Stock ${producto.stock}</p>
            <p class="card-text m-0">CodProducto #${producto.id}</p>
            <div id="buttonsAddCar">
-             <button id="btnDisminuir${producto.id}" type="button" class="btn btn-primary" onclick="disminuirProducto(${producto.id})">-</button>
+             <button id="btnDisminuir${producto.id}" type="button" class="btn btn-primary" >-</button>
              <span  class="mx-4" id="itemNro${producto.id}">1</span>
-             <button id="btnAumentar${producto.id}" type="button" class="btn btn-primary" onclick="aumentarProducto(${producto.id})">+</button>
-             <button id="btnAgregarProductoCarrito${producto.id}" type="button" class="btn btn-primary" onclick="agregarProductoCarrito(${producto.id})">Agregar</button>
+             <button id="btnAumentar${producto.id}" type="button" class="btn btn-primary" >+</button>
+             <button id="btnAgregarProductoCarrito${producto.id}" type="button" class="btn btn-primary" >Agregar</button>
            </div>
          </div>
        </div>
@@ -60,12 +60,41 @@ const cargarProductos= (productos)=>{
     });
     addEventos(productos);
 }
-const addEventos=(producto)=>{
-    const btnDisminuir=document.getElementById(`btnDisminuir${producto.id}`);
-    const btnAumentar=document.getElementById(`btnAumentar${producto.id}`);
-    const btnAgregaProuctoCarrito=document.getElementById(`btnAgregarProductoCarrito${producto.id}`)
+const addEventos=(productos)=>{
+   
+    productos.forEach((producto)=>{
+        const btnDisminuir=document.getElementById(`btnDisminuir${producto.id}`);
+        const btnAumentar=document.getElementById(`btnAumentar${producto.id}`);
+        const btnAgregaProuctoCarrito=document.getElementById(`btnAgregarProductoCarrito${producto.id}`);
+        btnDisminuir.addEventListener("click",()=>{
+            const itemNro=document.getElementById(`itemNro${producto.id}`);
+            if(Number(itemNro.innerText)-1>=1)
+                itemNro.innerText=Number(itemNro.innerText)-1;
+        });
+        btnAumentar.addEventListener("click",()=>{
+            const itemNro=document.getElementById(`itemNro${producto.id}`);
+            itemNro.innerText=Number(itemNro.innerText)+1;
+        })
+        btnAgregaProuctoCarrito.addEventListener("click",()=>{
+            const badgeCarrito=document.getElementById("badgeCarrito");
+            const itemNro=document.getElementById(`itemNro${producto.id}`);
+            const textoTotal = document.getElementById("textoTotal");
+            let precioProducto;
+            listaProductos.forEach((item,index)=>{
+                if(item.id==producto.id) precioProducto=producto.precio;
+            });
+            
+            badgeCarrito.innerText=Number(badgeCarrito.innerText) +Number(itemNro.innerText);
+            textoTotal.innerText=Number(textoTotal.innerText)+Number(itemNro.innerText)*precioProducto;
+        })
+
+    })
 }
 cargarProductos(listaProductos);
+
+
+
+
 
 const btnBuscar=document.getElementById("btnSearch");
 btnBuscar.addEventListener("click",()=>{
@@ -82,18 +111,7 @@ function filtrarProductos(inputProducto){
     cargarProductos(filtrados);
 }
 
-const agregarProductoCarrito=(idproducto)=>{
-    const badgeCarrito=document.getElementById("badgeCarrito");
-    const itemNro=document.getElementById(`itemNro${idproducto}`);
-    const textoTotal = document.getElementById("textoTotal");
-    let precioProducto;
-    listaProductos.forEach((producto,index)=>{
-        if(producto.id==idproducto) precioProducto=producto.precio;
-    });
-    
-    badgeCarrito.innerText=Number(badgeCarrito.innerText) +Number(itemNro.innerText);
-    textoTotal.innerText=Number(textoTotal.innerText)+Number(itemNro.innerText)*precioProducto;
-}
+
 
 
 
@@ -122,15 +140,7 @@ btnSearch.addEventListener("click", () => {
 })
 
 
-const disminuirProducto=(idproducto)=>{
-    const itemNro=document.getElementById(`itemNro${idproducto}`);
-    if(Number(itemNro.innerText)-1>=1)
-        itemNro.innerText=Number(itemNro.innerText)-1;
-}
-const aumentarProducto=(idproducto)=>{
-    const itemNro=document.getElementById(`itemNro${idproducto}`);
-    itemNro.innerText=Number(itemNro.innerText)+1;
-}
+
 
 
 
