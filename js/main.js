@@ -81,6 +81,19 @@ function filtrarProductos(inputProducto){
     cargarProductos(filtrados);
 }
 
+const btnCarrito=document.getElementById("btnCarrito");
+btnCarrito.addEventListener("click",()=>{
+    mostrarCarritoAlert();
+});
+
+function mostrarCarritoAlert(){
+    let textProductos="";
+    carrito.forEach((producto,index)=>{
+        textProductos+=`${index+1}.${producto.nombre} precio: ${producto.precio}\n`;
+    });
+    textProductos+="\n EL TOTAL A PAGAR ES: "+carrito.reduce((acumulador,elemento)=>acumulador+elemento.precio,0);
+    alert(`Los productos Seleccionados para la compra son:\n\n ${textProductos} ` )
+}
 
 
 
