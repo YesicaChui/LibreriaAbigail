@@ -29,7 +29,10 @@
             <a class="nav-link active" aria-current="page" href="#" id="menuInicio">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="menuAdmin">Administrar Productos</a>
+            <a class="nav-link" href="#" id="menuAdmin" style="display: none ;">Administrar Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="menuQuienessomos" >Quienes somos</a>
           </li>
           <!--           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,7 +89,20 @@
       <!-- Mis productos cargados dinamicamente -->
       <div class="row " id="productos">
         
-        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 pt-4" style="width: 18.1rem;">
+        <form class="mt-5">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" id="inputUsuario" placeholder="Usuario">
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="inputPassword">
+          </div>
+          <button type="button" class="btn btn-primary" id="btnLogin">Ingresar</button>
+        </form>
+        <div id="respuesta" style="display: none;">Nombre o contraseña Incorrectos</div>
+<!--         <div class="card col-sm-12 col-md-6 col-lg-3 m-2 pt-4" style="width: 18.1rem;">
           <div class="card-body tex">
             <h5 class="card-title m-0 fw-bold mb-3 text-center">Inserte los datos del Producto</h5>
             <label for="inputUrl">URL Imagen - Link</label>
@@ -129,7 +145,7 @@
               <button type="button" class="btn btn-outline-info" id="btneditar"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 30px;height:30px" alt=""></button>
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
