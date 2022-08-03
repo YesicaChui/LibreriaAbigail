@@ -1,16 +1,23 @@
 <!DOCTYPE html>
+
 <head>
   <title>Libreria Abigail</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/index.css">
   <script defer src="./js/data.js"></script>
   <script defer src="./js/main.js"></script>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg bg-light sticky-top p-0">
     <div class="container-fluid ">
-      <a class="navbar-brand" href="#" id="menuLogo"><img id="logo" src="https://logodix.com/logo/1807529.png" alt="" style="width: 100px;"><p class="text-center fw-bold">Libreria</p></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="#" id="menuLogo"><img id="logo" src="https://logodix.com/logo/1807529.png" alt=""
+          style="width: 100px;">
+        <p class="text-center fw-bold">Libreria</p>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -21,7 +28,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#" id="menuAdmin">Administrar Productos</a>
           </li>
-<!--           <li class="nav-item dropdown">
+          <!--           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
             </a>
@@ -35,54 +42,69 @@
 
         </ul>
         <form class="d-flex" role="search">
-          <input id="inputBuscar" class="form-control me-2" type="search" placeholder="Que estas buscando" aria-label="Search">
-          <button class="btn btn-outline-success" type="button" id="btnSearch"><img src="https://static.vecteezy.com/system/resources/previews/000/442/725/non_2x/vector-find-icon.jpg" alt="" style="width: 30px;"></button>
+          <input id="inputBuscar" class="form-control me-2" type="search" placeholder="Que estas buscando"
+            aria-label="Search">
+          <button class="btn btn-outline-success" type="button" id="btnSearch"><img
+              src="https://static.vecteezy.com/system/resources/previews/000/442/725/non_2x/vector-find-icon.jpg" alt=""
+              style="width: 30px;"></button>
         </form>
 
-        <div class="d-flex">         
+        <div class="d-flex">
           <div class="align-self-center pt-2 ms-2">
             <p class="m-0">Carrito</p>
-            <p >S/ <span id="textoTotal">0.00</span> </p>
+            <p>S/ <span id="textoTotal">0.00</span> </p>
           </div>
         </div>
 
       </div>
       <button id="btnCarrito" type="button" class="btn btn-light position-relative">
-        <img src="https://icones.pro/wp-content/uploads/2021/05/icone-de-panier-noir.png" alt="" style="width: 40px;height:50px">
-        <span class="position-absolute top-0  translate-middle badge rounded-pill bg-danger" id="badgeCarrito" >
-          0          
+        <img src="https://icones.pro/wp-content/uploads/2021/05/icone-de-panier-noir.png" alt=""
+          style="width: 40px;height:50px">
+        <span class="position-absolute top-0  translate-middle badge rounded-pill bg-danger" id="badgeCarrito">
+          0
         </span>
       </button>
     </div>
   </nav>
-    <main class="container">
+  <main class="container">
 
-      <section class="container-fluid">
-        <!-- Mis productos cargados dinamicamente -->
-        <div class="row" id="productos">
-<!--           <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;">
-            <img src="https://images.utilex.pe/000979/450x450/lapicero-bps-azul-x-1-unidad-pilot-CYWTLUIE4HCHE.png" class="card-img-top" alt="..." >
-            <div class="card-body">
-              <h5 class="card-title m-0">Card title</h5>
-              <p class="card-text m-0">lapicero tinta liquida</p>
-              <p class="card-text m-0">S/ 5.00</p>
-              <p class="card-text m-0">Stock 10</p>
-              <p class="card-text m-0">CodProducto #1</p>
-              <div id="buttonsAddCar">
-                <button type="button" class="btn btn-primary" id="btnMenos">-</button>
-                <span class="mx-4">99</span>
-                <button type="button" class="btn btn-primary" id="btnMas">+</button>
-                <button type="button" class="btn btn-primary"  id="btnAgregar">Agregar</button>
-              </div>
+    <section class="container-fluid">
+      <!-- Mis productos cargados dinamicamente -->
+      <div class="row" id="productos">
+<!--         
+        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 d-flex align-items-center pt-5" style="width: 18.1rem; background-color: lightblue;">
+          <img src="https://cdn-icons-png.flaticon.com/512/189/189689.png" 
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title m-0 fw-bold text-center">Insertar Producto</h5>
+
+
+          </div>
+        </div>
+        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;">
+          <img src="https://images.utilex.pe/000979/450x450/lapicero-bps-azul-x-1-unidad-pilot-CYWTLUIE4HCHE.png"
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title m-0 fw-bold">Card title</h5>
+            <p class="card-text m-0">lapicero tinta liquida</p>
+            <p class="card-text m-0">S/ 5.00</p>
+            <p class="card-text m-0">Stock 10</p>
+            <p class="card-text m-0">CodProducto #1</p>
+            <div id="buttonsAddCar" class="d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-danger" id="btnBorrar"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 30px;height:30px" alt=""></button>
+            
+              <button type="button" class="btn btn-outline-info" id="btneditar"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 30px;height:30px" alt=""></button>
             </div>
-          </div> -->
+          </div>
+        </div>
 
-          </div>
-          </div>
-      </section>
-    </main>
-    <!-- <div id="productos"> -->
-<!--         <article>
+ -->      </div>
+
+      </div>
+    </section>
+  </main>
+  <!-- <div id="productos"> -->
+  <!--         <article>
           <img src="https://images.utilex.pe/000979/450x450/lapicero-bps-azul-x-1-unidad-pilot-CYWTLUIE4HCHE.png" alt="">
           <p>lapicero</p>
           <p>lapicero tinta liquida</p>
@@ -90,9 +112,12 @@
           <p>Stock 10</p>
           <p>CodProducto #1</p>
         </article> -->
-        
-    <!-- </div> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+  <!-- </div> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
 
 </body>
+
 </html>

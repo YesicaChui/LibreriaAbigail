@@ -95,8 +95,75 @@ function mostrarCarritoAlert(){
     alert(`Los productos Seleccionados para la compra son:\n\n ${textProductos} ` )
 }
 
+const menuAdministrar=document.getElementById("menuAdmin");
+const menuInicio = document.getElementById("menuInicio");
+menuInicio.addEventListener("click",()=>{
+    cargarProductos(listaProductos);
+})
+
+menuAdministrar.addEventListener("click",()=>{
+    const divProductos=document.getElementById("productos");
+    divProductos.innerHTML=`
+    <div id="cardInsertar" class="card col-sm-12 col-md-6 col-lg-3 m-2 d-flex align-items-center pt-5" style="width: 18.1rem;">
+    <img src="https://cdn-icons-png.flaticon.com/512/189/189689.png" 
+      class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title m-0 fw-bold text-center">Insertar Producto</h5>
 
 
+    </div>
+  </div>
+    `;
+    listaProductos.forEach((producto)=>{
+         divProductos.innerHTML+=`
+       <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;">
+          <img src=${producto.imagen}
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title m-0 fw-bold">${producto.nombre}</h5>
+            <p class="card-text m-0">${producto.descripcion}</p>
+            <p class="card-text m-0">S/ ${producto.precio}</p>
+            <p class="card-text m-0">Stock ${producto.stock}</p>
+            <p class="card-text m-0">CodProducto #${producto.id}</p>
+            <div id="buttonsAddCar" class="d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-danger" id="btnBorrar${producto.id}"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 30px;height:30px" alt=""></button>
+            
+              <button type="button" class="btn btn-outline-info" id="btnEditar${producto.id}"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 30px;height:30px" alt=""></button>
+            </div>
+          </div>
+        </div>
+         `   
+         
+    });
+    // addEventosAdministrar(productos);
+})
+
+const addEventosAdministrar=()=>{
+   
+    listaProductos.forEach((producto)=>{
+        const btnDisminuir=document.getElementById(`btnDisminuir${producto.id}`);
+        const btnAumentar=document.getElementById(`btnAumentar${producto.id}`);
+        const btnAgregaProuctoCarrito=document.getElementById(`btnAgregarProductoCarrito${producto.id}`);
+        btnDisminuir.addEventListener("click",()=>{
+            const itemNro=document.getElementById(`itemNro${producto.id}`);
+            if(Number(itemNro.innerText)-1>=1)
+                itemNro.innerText=Number(itemNro.innerText)-1;
+        });
+        btnAumentar.addEventListener("click",()=>{
+            const itemNro=document.getElementById(`itemNro${producto.id}`);
+            itemNro.innerText=Number(itemNro.innerText)+1;
+        })
+        btnAgregaProuctoCarrito.addEventListener("click",()=>{
+            const badgeCarrito=document.getElementById("badgeCarrito");
+            const itemNro=Number(document.getElementById(`itemNro${producto.id}`).innerText);
+            const textoTotal = document.getElementById("textoTotal");
+            addCarrito(producto,itemNro);
+            console.log(carrito);
+            textoTotal.innerText=carrito.reduce((acumulador,elemento)=>acumulador+elemento.precio,0);
+        })
+
+    })
+}
 
 const menuItems = document.querySelectorAll(".nav-item");
 console.log(menuItems);
