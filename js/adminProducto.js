@@ -20,33 +20,14 @@ function cargarAdministrarProductos(cardInsertar) {
     `;
   if (cardInsertar) {
     console.log("Se presiono la card de insertar");
-    const card = document.getElementById("cardInsertar");
-    card.innerHTML = `
-        <div class="card-body tex">
-            <h5 class="card-title m-0 fw-bold mb-3 text-center">Inserte los datos del Producto</h5>
-            <label for="inputUrl">URL Imagen - Link</label>
-            <input class="w-100 mb-2" type="text" id="inputUrl" placeholder="URL Imagen">
-            <label for="inputNombreProducto" >Nombre de Producto</label>
-            <input class="w-100  mb-2" type="text" id="inputNombreProducto" placeholder="Nombre de Producto">
-            <label for="inputDescripcion">Descripción Producto</label>
-            <input class="w-100  mb-2" type="text" id="inputDescripcion"  placeholder="Descripción Producto">
-            <label for="inputPrecio">Precio</label>
-            <input class="w-100" type="number" value=0 id="inputPrecio">
-            <label for="inputStock">Stock</label>
-            <input class="w-100 mb-3" type="number" value=0 id="inputStock">            
-            <div id="buttonsAddCar" class="d-flex justify-content-between">
-              <button type="button" class="btn btn-success fw-bold" id="btnGuardaProducto">Guardar</button>
-              <button type="button" class="btn btn-danger fw-bold" id="btnCancelarInsertar">Cancelar</button>
-            </div>
-          </div>
-          `;
+          pintarCardGuardar("cardInsertar")
           console.log("Se pinto formulario");
 
   }
   console.log("pintado de productos");
   listaProductos.forEach((producto) => {
     divProductos.innerHTML += `
-       <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;">
+       <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;" id="cardProducto${producto.id}">
           <img src=${producto.imagen}
             class="card-img-top" alt="...">
           <div class="card-body">
@@ -66,6 +47,29 @@ function cargarAdministrarProductos(cardInsertar) {
 
   });
 
+}
+
+const pintarCardGuardar=(idCard)=>{
+  const card = document.getElementById(idCard);
+  card.innerHTML = `
+      <div class="card-body tex">
+          <h5 class="card-title m-0 fw-bold mb-3 text-center" id= "tituloCardInsertar">Inserte los datos del Producto</h5>
+          <label for="inputUrl">URL Imagen - Link</label>
+          <input class="w-100 mb-2" type="text" id="inputUrl" placeholder="URL Imagen">
+          <label for="inputNombreProducto" >Nombre de Producto</label>
+          <input class="w-100  mb-2" type="text" id="inputNombreProducto" placeholder="Nombre de Producto">
+          <label for="inputDescripcion">Descripción Producto</label>
+          <input class="w-100  mb-2" type="text" id="inputDescripcion"  placeholder="Descripción Producto">
+          <label for="inputPrecio">Precio</label>
+          <input class="w-100" type="number" value=0 id="inputPrecio">
+          <label for="inputStock">Stock</label>
+          <input class="w-100 mb-3" type="number" value=0 id="inputStock">            
+          <div id="buttonsAddCar" class="d-flex justify-content-between">
+            <button type="button" class="btn btn-success fw-bold" id="btnGuardaProducto">Guardar</button>
+            <button type="button" class="btn btn-danger fw-bold" id="btnCancelarInsertar">Cancelar</button>
+          </div>
+        </div>
+        `;
 }
 
 const addEventosAdministrar = () => {
@@ -106,7 +110,8 @@ const addEventosAdministrar = () => {
 
     });
     btnEditar.addEventListener("click", () => {
-      console.log(`Se presiono editar al item ${producto.id}`)
+      console.log(`Se presiono editar al item ${producto.id}`);
+      actualizarProducto(producto);
     })
 
   })
@@ -120,7 +125,39 @@ const eliminarProducto = (codProducto) => {
   addEventosAdministrar();
 }
 
-const guardarProducto = ()=>{
+const actualizarProducto = (producto) => {
+  pintarCardGuardar(`cardProducto${producto.id}`);
+  const tituloCardInsertar = document.getElementById("tituloCardInsertar");
+  tituloCardInsertar.innerText="Actualice los datos del Producto";
+  const inputUrl = document.getElementById("inputUrl");
+  const inputNombreProducto=document.getElementById("inputNombreProducto");
+  const inputDescripcion=document.getElementById("inputDescripcion");
+  const inputPrecio=document.getElementById("inputPrecio");
+  const inputStock=document.getElementById("inputStock");
+  inputUrl.value=producto.imagen;
+  inputNombreProducto.value=producto.nombre;
+  inputDescripcion.value=producto.descripcion;
+  inputPrecio.value=producto.precio;
+  inputStock.value=producto.stock;
+  const btnCancelar = document.getElementById("btnCancelarInsertar");
+  btnCancelar.addEventListener("click", () => {
+    console.log("se presiono el cancelar")
+    cargarAdministrarProductos();
+    addEventosAdministrar();
+  })
+  const btnGuardaProducto = document.getElementById("btnGuardaProducto");
+  console.log("btnGuardaProducto",btnGuardaProducto);
+  btnGuardaProducto.addEventListener("click", () => {
+    console.log("se preseiono el insertar");
+    const idProducto=producto.id;
+    guardarProducto(idProducto);    
+  })
+  
+/*   cargarAdministrarProductos();
+  addEventosAdministrar(); */
+}
+
+const guardarProducto = (idProducto)=>{
   const inputUrl = document.getElementById("inputUrl").value;
   const inputNombreProducto=document.getElementById("inputNombreProducto").value;
   const inputDescripcion=document.getElementById("inputDescripcion").value;
@@ -135,11 +172,24 @@ const guardarProducto = ()=>{
     //precio 2
     // tajador bicolor
     // stock 5
-    alert("los datos estan correctos y listos para guardar");
-    codigoCorrelativo++;
-    listaProductos.push(new Producto(
-      codigoCorrelativo,inputNombreProducto,inputDescripcion,inputPrecio,inputStock,inputUrl
-    ));
+    alert("El producto se guardo exitosamente");
+    if(!idProducto)
+    {   
+      codigoCorrelativo++;
+        listaProductos.push(new Producto(
+          codigoCorrelativo,inputNombreProducto,inputDescripcion,inputPrecio,inputStock,inputUrl
+        ));
+    }else{
+      listaProductos.forEach((producto, index) => {
+        if (producto.id == idProducto){
+          producto.imagen=inputUrl;
+          producto.nombre=inputNombreProducto;
+          producto.descripcion=inputDescripcion;
+          producto.precio=inputPrecio;
+          producto.stock=inputStock;
+        };
+      });
+    }
 
     cargarAdministrarProductos();
     addEventosAdministrar();
