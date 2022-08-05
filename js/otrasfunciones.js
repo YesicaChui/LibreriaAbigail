@@ -1,4 +1,3 @@
-let codigoCorrelativo=listaProductos.length;
 //funcion para añadir productos que al final llama a cargar productos para visualizarla
 /*por ejemplo se puede probar insertando el producto Compas con precio 10,
  descripcion para dibujo tecnico, stock 5, 

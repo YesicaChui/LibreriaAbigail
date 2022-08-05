@@ -1,3 +1,4 @@
+let codigoCorrelativo=listaProductos.length;
 const menuAdministrar = document.getElementById("menuAdmin");
 menuAdministrar.addEventListener("click", () => {
   cargarAdministrarProductos();
@@ -86,8 +87,7 @@ const addEventosAdministrar = () => {
     console.log("btnGuardaProducto",btnGuardaProducto);
     btnGuardaProducto.addEventListener("click", () => {
       console.log("se preseiono el insertar")
-      cargarAdministrarProductos();
-      addEventosAdministrar();
+      guardarProducto();    
     })
   }
 
@@ -118,4 +118,31 @@ const eliminarProducto = (codProducto) => {
   });
   cargarAdministrarProductos();
   addEventosAdministrar();
+}
+
+const guardarProducto = ()=>{
+  const inputUrl = document.getElementById("inputUrl").value;
+  const inputNombreProducto=document.getElementById("inputNombreProducto").value;
+  const inputDescripcion=document.getElementById("inputDescripcion").value;
+  const inputPrecio=Number(document.getElementById("inputPrecio").value);
+  const inputStock=Number(document.getElementById("inputStock").value);
+  if(inputUrl===""||inputNombreProducto===""||inputDescripcion===""
+  ||inputPrecio<=0||inputStock<=0||isNaN(inputPrecio)||isNaN(inputStock)){
+    alert("Porfavor llene todos los datos y verifique que sean correctos");
+  }else{
+    // https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1995931542.jpg
+    //Blister Tajador Vinifan
+    //precio 2
+    // tajador bicolor
+    // stock 5
+    alert("los datos estan correctos y listos para guardar");
+    codigoCorrelativo++;
+    listaProductos.push(new Producto(
+      codigoCorrelativo,inputNombreProducto,inputDescripcion,inputPrecio,inputStock,inputUrl
+    ));
+
+    cargarAdministrarProductos();
+    addEventosAdministrar();
+  }
+
 }
