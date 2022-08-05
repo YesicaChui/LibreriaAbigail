@@ -1,4 +1,5 @@
 let codigoCorrelativo=listaProductos.length;
+let flagActualizarInsertarPendiente=false;
 const menuAdministrar = document.getElementById("menuAdmin");
 menuAdministrar.addEventListener("click", () => {
   cargarAdministrarProductos();
@@ -77,6 +78,7 @@ const addEventosAdministrar = () => {
   const btnCancelar = document.getElementById("btnCancelarInsertar");
   if (!btnCancelar) {
     cardInsertar.addEventListener("click", () => {
+      flagActualizarInsertarPendiente=true;
       cargarAdministrarProductos(cardInsertar);
       addEventosAdministrar();
     })}
@@ -86,12 +88,14 @@ const addEventosAdministrar = () => {
       console.log("se presiono el cancelar")
       cargarAdministrarProductos();
       addEventosAdministrar();
+      flagActualizarInsertarPendiente=false;
     })
     const btnGuardaProducto = document.getElementById("btnGuardaProducto");
     console.log("btnGuardaProducto",btnGuardaProducto);
     btnGuardaProducto.addEventListener("click", () => {
       console.log("se preseiono el insertar")
-      guardarProducto();    
+      guardarProducto();  
+        
     })
   }
 
@@ -111,7 +115,13 @@ const addEventosAdministrar = () => {
     });
     btnEditar.addEventListener("click", () => {
       console.log(`Se presiono editar al item ${producto.id}`);
-      actualizarProducto(producto);
+      if(!flagActualizarInsertarPendiente)
+       { 
+        actualizarProducto(producto);
+        flagActualizarInsertarPendiente=true;
+      }
+      else
+        alert("Concluya el proceso de actualizar o Insertar un producto para continuar")
     })
 
   })
@@ -144,6 +154,7 @@ const actualizarProducto = (producto) => {
     console.log("se presiono el cancelar")
     cargarAdministrarProductos();
     addEventosAdministrar();
+    flagActualizarInsertarPendiente=false;
   })
   const btnGuardaProducto = document.getElementById("btnGuardaProducto");
   console.log("btnGuardaProducto",btnGuardaProducto);
@@ -193,6 +204,7 @@ const guardarProducto = (idProducto)=>{
 
     cargarAdministrarProductos();
     addEventosAdministrar();
+    flagActualizarInsertarPendiente=false
   }
 
 }
