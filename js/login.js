@@ -1,8 +1,20 @@
+let checkLogin=0;
+verificarLogin();
+
+function verificarLogin(){
+
+  const logeado=localStorage.getItem("Logeado");
+  console.log(logeado);
+  if(logeado=="true"){
+    console.log(logeado, "soy verdadero");
+    loginExitoso();
+  }
+}
 
 console.log("se cargo archivo login")
 const btnSesion=document.getElementById("btnSesion");
 console.log(btnSesion);
-let checkLogin=0;
+
 btnSesion.addEventListener("click",()=>{
     console.log("se presiono btnsesion");
     if(checkLogin==1){
@@ -12,6 +24,7 @@ btnSesion.addEventListener("click",()=>{
         textoSesion.innerText="Inicia Sesión";
         const textoPerfil= document.getElementById("textoPerfil");
         textoPerfil.innerText="Hola";
+        localStorage.setItem("Logeado", false);
     }
     cargarLogin();
     const btnLogin=document.getElementById("btnLogin");
@@ -20,13 +33,9 @@ btnSesion.addEventListener("click",()=>{
         const inputPassword=document.getElementById("inputPassword").value;
         if(inputUsuario==="Yesica"&&inputPassword==="123456"){
             alert("Credenciales correctas");
-            const menuAdmin = document.getElementById("menuAdmin");
-            const textoSesion= document.getElementById("textoSesion");
-            textoSesion.innerText="Cerrar Sesión";
-            menuAdmin.removeAttribute("style");
-            const textoPerfil= document.getElementById("textoPerfil");
-            textoPerfil.innerText="Yesica";
-            checkLogin=1;
+            localStorage.setItem("Logeado", true);
+            localStorage.setItem("Nombre", inputUsuario);
+            loginExitoso();
         }else{
             alert("Credenciales incorrectas");
         }
@@ -53,3 +62,13 @@ const cargarLogin= ()=>{
    
 }
 
+function loginExitoso(){
+  console.log("login exitoso")
+  const menuAdmin = document.getElementById("menuAdmin");
+  const textoSesion= document.getElementById("textoSesion");
+  textoSesion.innerText="Cerrar Sesión";
+  menuAdmin.removeAttribute("style");
+  const textoPerfil= document.getElementById("textoPerfil");
+  textoPerfil.innerText="Yesica";
+  checkLogin=1;
+}
