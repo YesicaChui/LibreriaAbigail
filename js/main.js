@@ -1,4 +1,13 @@
 
+let almacenados = JSON.parse(localStorage.getItem("listaProductos"));
+console.log(almacenados,"probando");
+if(almacenados){
+    listaProductos=almacenados;    
+}
+
+console.log(listaProductos);
+
+
 //cargando los productos del array de objetos
 const cargarProductos= (productos)=>{
     const divProductos=document.getElementById("productos");

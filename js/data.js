@@ -13,7 +13,7 @@ class Producto {
 }
 
 //definiendo los productos de la tienda
-const listaProductos = [
+let listaProductos = [
     new Producto(1, "Lapicero", "Tinta liquida", 4,10,"https://images.utilex.pe/000979/450x450/lapicero-bps-azul-x-1-unidad-pilot-CYWTLUIE4HCHE.png"),
     new Producto(2, "Cuaderno Layconsa", "Cuaderno cuadriculado 100 hojas", 12,10,"http://s3.amazonaws.com/imagenes-sellers-mercado-ripley/2020/09/02174124/2140110401.jpg"),
     new Producto(3, "Corrector Artesco", "Corrector punta fina", 6,10,"https://images.utilex.pe/022501/450x450/corrector-lapicero-9-ml-x-1-unidad-artesco-CYWNAVQ2LIC7Q.png"),

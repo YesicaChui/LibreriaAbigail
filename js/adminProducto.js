@@ -131,6 +131,7 @@ const eliminarProducto = (codProducto) => {
   listaProductos.forEach((producto, index) => {
     if (producto.id == codProducto) listaProductos.splice(index, 1);
   });
+  guardarProductosStorage();
   cargarAdministrarProductos();
   addEventosAdministrar();
 }
@@ -201,10 +202,14 @@ const guardarProducto = (idProducto)=>{
         };
       });
     }
-
+    guardarProductosStorage();
     cargarAdministrarProductos();
     addEventosAdministrar();
     flagActualizarInsertarPendiente=false
   }
 
+}
+
+function guardarProductosStorage(){
+  localStorage.setItem("listaProductos", JSON.stringify(listaProductos)) 
 }
