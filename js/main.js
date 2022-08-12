@@ -1,9 +1,11 @@
 
-let almacenados = JSON.parse(localStorage.getItem("listaProductos"));
+/* let almacenados = JSON.parse(localStorage.getItem("listaProductos"));
 console.log(almacenados,"probando");
 if(almacenados){
     listaProductos=almacenados;    
-}
+} */
+//Aplicando operador OR
+listaProductos=JSON.parse(localStorage.getItem("listaProductos"))||listaProductos;
 
 console.log(listaProductos);
 
@@ -43,6 +45,7 @@ const addEventos=(productos)=>{
         const btnAgregaProuctoCarrito=document.getElementById(`btnAgregarProductoCarrito${producto.id}`);
         btnDisminuir.addEventListener("click",()=>{
             const itemNro=document.getElementById(`itemNro${producto.id}`);
+            
             if(Number(itemNro.innerText)-1>=1)
                 itemNro.innerText=Number(itemNro.innerText)-1;
         });

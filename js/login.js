@@ -4,11 +4,12 @@ verificarLogin();
 function verificarLogin(){
 
   const logeado=localStorage.getItem("Logeado");
-  console.log(logeado);
+/*   console.log(logeado);
   if(logeado=="true"){
     console.log(logeado, "soy verdadero");
     loginExitoso();
-  }
+  } */
+  logeado=="true" && loginExitoso();
 }
 
 console.log("se cargo archivo login")
@@ -17,30 +18,40 @@ console.log(btnSesion);
 
 btnSesion.addEventListener("click",()=>{
     console.log("se presiono btnsesion");
-    if(checkLogin==1){
-        const menuAdmin = document.getElementById("menuAdmin");
-        menuAdmin.setAttribute("style","display:none");
-        const textoSesion= document.getElementById("textoSesion");
-        textoSesion.innerText="Inicia Sesión";
-        const textoPerfil= document.getElementById("textoPerfil");
-        textoPerfil.innerText="Hola";
-        localStorage.setItem("Logeado", false);
-    }
+/*     if(checkLogin==1){
+      cerrarSesion();
+    } */
+    checkLogin==1 && cerrarSesion();
     cargarLogin();
     const btnLogin=document.getElementById("btnLogin");
     btnLogin.addEventListener("click",()=>{
         const inputUsuario=document.getElementById("inputUsuario").value;
         const inputPassword=document.getElementById("inputPassword").value;
-        if(inputUsuario==="Yesica"&&inputPassword==="123456"){
-            alert("Credenciales correctas");
-            localStorage.setItem("Logeado", true);
-            localStorage.setItem("Nombre", inputUsuario);
-            loginExitoso();
+/*         if(inputUsuario==="Yesica"&&inputPassword==="123456"){
+          logearse();
         }else{
             alert("Credenciales incorrectas");
-        }
+        } */
+        inputUsuario==="Yesica"&&inputPassword==="123456"?logearse():alert("Credenciales incorrectas")
     })
 });
+
+const logearse=()=>{
+  alert("Credenciales correctas");
+  localStorage.setItem("Logeado", true);
+  localStorage.setItem("Nombre", inputUsuario);
+  loginExitoso();
+}
+
+const cerrarSesion=()=>{
+  const menuAdmin = document.getElementById("menuAdmin");
+  menuAdmin.setAttribute("style","display:none");
+  const textoSesion= document.getElementById("textoSesion");
+  textoSesion.innerText="Inicia Sesión";
+  const textoPerfil= document.getElementById("textoPerfil");
+  textoPerfil.innerText="Hola";
+  localStorage.setItem("Logeado", false);
+}
 
 const cargarLogin= ()=>{
     const divProductos=document.getElementById("productos");

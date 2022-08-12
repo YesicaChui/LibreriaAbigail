@@ -19,14 +19,12 @@ function cargarAdministrarProductos(cardInsertar) {
     </div>
   </div>
     `;
-  if (cardInsertar) {
-    console.log("Se presiono la card de insertar");
+/*   if (cardInsertar) {   
           pintarCardGuardar("cardInsertar")
-          console.log("Se pinto formulario");
-
-  }
+          } */
+  cardInsertar && pintarCardGuardar("cardInsertar")
   console.log("pintado de productos");
-  listaProductos.forEach((producto) => {
+/*   listaProductos.forEach((producto) => {
     divProductos.innerHTML += `
        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;" id="cardProducto${producto.id}">
           <img src=${producto.imagen}
@@ -46,6 +44,26 @@ function cargarAdministrarProductos(cardInsertar) {
         </div>
          `
 
+  }); */
+  listaProductos.forEach(({imagen,nombre,descripcion,precio,stock,id}) => {
+    divProductos.innerHTML += `
+       <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;" id="cardProducto${id}">
+          <img src=${imagen}
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title m-0 fw-bold">${nombre}</h5>
+            <p class="card-text m-0">${descripcion}</p>
+            <p class="card-text m-0">S/ ${precio}</p>
+            <p class="card-text m-0">Stock ${stock}</p>
+            <p class="card-text m-0">CodProducto #${id}</p>
+            <div id="buttonsAddCar" class="d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-danger" id="btnBorrar${id}"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 30px;height:30px" alt=""></button>
+            
+              <button type="button" class="btn btn-outline-info" id="btnEditar${id}"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 30px;height:30px" alt=""></button>
+            </div>
+          </div>
+        </div>
+         `
   });
 
 }
@@ -129,7 +147,8 @@ const addEventosAdministrar = () => {
 
 const eliminarProducto = (codProducto) => {
   listaProductos.forEach((producto, index) => {
-    if (producto.id == codProducto) listaProductos.splice(index, 1);
+    //if (producto.id == codProducto) listaProductos.splice(index, 1);
+    producto.id == codProducto && listaProductos.splice(index, 1);
   });
   guardarProductosStorage();
   cargarAdministrarProductos();
