@@ -65,9 +65,15 @@ const addEventos=(productos)=>{
     })
 }
 
-function addCarrito(producto,itemNro){
+/* function addCarrito(producto,itemNro){
     for(let i=1;i<=itemNro;i++)
         carrito.push(producto);
+    badgeCarrito.innerText=carrito.length;
+} */
+
+function addCarrito(...argumentos){
+    for(let i=1;i<=argumentos[1];i++)
+        carrito.push(argumentos[0]);
     badgeCarrito.innerText=carrito.length;
 }
 
