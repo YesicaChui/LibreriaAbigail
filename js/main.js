@@ -54,7 +54,7 @@ const addEventos=(productos)=>{
             itemNro.innerText=Number(itemNro.innerText)+1;
         })
         btnAgregaProuctoCarrito.addEventListener("click",()=>{
-            const badgeCarrito=document.getElementById("badgeCarrito");
+           
             const itemNro=Number(document.getElementById(`itemNro${producto.id}`).innerText);
             const textoTotal = document.getElementById("textoTotal");
             addCarrito(producto,itemNro);
@@ -72,6 +72,7 @@ const addEventos=(productos)=>{
 } */
 
 function addCarrito(...argumentos){
+    const badgeCarrito=document.getElementById("badgeCarrito");
     for(let i=1;i<=argumentos[1];i++)
         carrito.push(argumentos[0]);
     badgeCarrito.innerText=carrito.length;

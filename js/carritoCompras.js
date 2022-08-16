@@ -45,6 +45,8 @@ function cargarProductosCarrito(){
             </div>
             </div> 
             `;
+            console.log("mi evento");
+           
         }else{
             let itemNro=document.getElementById(`itemNro${producto.id}`);
             itemNro.innerText=Number(itemNro.innerText)+1;
@@ -53,7 +55,65 @@ function cargarProductosCarrito(){
         }
         
     });
+    addEventoCarrito();
 }
+
+function addEventoCarrito(){
+/*     console.log("boton presionado", producto.id);
+    const mibtnBorrar = document.getElementById(`btnBorrar${producto.id}`);  
+    mibtnBorrar.addEventListener("click", () => {    
+        console.log("boton presionado", producto.id); 
+        eliminarProductoCarrito(producto.id)
+          cargarCarritoCompras();
+    }); */
+    addEventoEliminar();
+    addEventoPagarCarrito();
+
+}
+
+function addEventoPagarCarrito(){
+  const btnPagar=document.getElementById("btnPagarCarrito");
+  btnPagar.addEventListener("click",()=>{
+    alertPersonalizado("Pago Realizado correctamente",true);
+    carrito.splice(0,carrito.length);
+    const badgeCarrito=document.getElementById("badgeCarrito");
+    badgeCarrito.innerText=carrito.length;
+    const textoTotal = document.getElementById("textoTotal");   
+    textoTotal.innerText=carrito.reduce((acumulador,elemento)=>acumulador+elemento.precio,0);
+    cargarCarritoCompras();
+  });
+}
+
+function addEventoEliminar(){
+  let eventoCarrito=[];
+  carrito.forEach((producto,index)=>{
+    const checkEvento=eventoCarrito.some((ec)=>ec?.id==producto.id);
+    if(!checkEvento){
+      const mibtnBorrar = document.getElementById(`btnBorrar${producto.id}`);  
+      mibtnBorrar.addEventListener("click", () => {    
+          console.log("boton presionado", producto.id); 
+          eliminarProductoCarrito(producto.id)
+            cargarCarritoCompras();
+      });
+      eventoCarrito.push(producto);
+    }
+  });
+}
+
+const eliminarProductoCarrito = (codProducto) => {
+    let newCarrito=[];
+    carrito.forEach((productoCarrito, index) => {
+        //if (producto.id == codProducto) listaProductos.splice(index, 1);
+        productoCarrito.id != codProducto && newCarrito.push(productoCarrito);
+      });
+    carrito=[...newCarrito];
+    const badgeCarrito=document.getElementById("badgeCarrito");
+    badgeCarrito.innerText=carrito.length;
+    const textoTotal = document.getElementById("textoTotal");   
+    textoTotal.innerText=carrito.reduce((acumulador,elemento)=>acumulador+elemento.precio,0);
+}
+
+
 /* `
 
 ` */
