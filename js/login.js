@@ -32,15 +32,33 @@ btnSesion.addEventListener("click",()=>{
         }else{
             alert("Credenciales incorrectas");
         } */
-        inputUsuario==="Yesica"&&inputPassword==="123456"?logearse():alert("Credenciales incorrectas")
+        inputUsuario==="Yesica"&&inputPassword==="123456"?logearse():alertPersonalizado("Credenciales incorrectas",false);//alert("Credenciales incorrectas")
     })
 });
 
 const logearse=()=>{
-  alert("Credenciales correctas");
+  // alert("Credenciales correctas");
+  alertPersonalizado("Credenciales correctas",true);
   localStorage.setItem("Logeado", true);
   localStorage.setItem("Nombre", inputUsuario);
   loginExitoso();
+}
+
+const alertPersonalizado=(mensaje,isCorrecto)=>{
+  if(isCorrecto){
+    Swal.fire({
+      icon: 'success',
+      title: mensaje,
+        
+    })
+  }
+  else{
+    Swal.fire({
+      icon: 'error',
+      title: mensaje,     
+   
+    })
+  }
 }
 
 const cerrarSesion=()=>{
