@@ -99,7 +99,8 @@ function filtrarProductos(inputProducto){
 
 const btnCarrito=document.getElementById("btnCarrito");
 btnCarrito.addEventListener("click",()=>{
-    mostrarCarritoAlert();
+   // mostrarCarritoAlert();
+   cargarCarritoCompras();
 });
 
 function mostrarCarritoAlert(){
