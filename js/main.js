@@ -5,12 +5,6 @@ if(almacenados){
     listaProductos=almacenados;    
 } */
 //Aplicando operador OR
-listaProductos=JSON.parse(localStorage.getItem("listaProductos"))||listaProductos;
-
-console.log(listaProductos);
-
-
-//cargando los productos del array de objetos
 const cargarProductos= (productos)=>{
     const divProductos=document.getElementById("productos");
     divProductos.innerHTML="";
@@ -22,7 +16,7 @@ const cargarProductos= (productos)=>{
            <h5 class="card-title m-0 fw-bold">${producto.nombre}</h5>
            <p class="card-text m-0">${producto.descripcion}</p>
            <p class="card-text m-0">S/ ${producto.precio}</p>
-           <p class="card-text m-0">Stock ${producto.stock}</p>
+           <p class="card-text m-0 noVer">Stock ${producto.stock}</p>
            <p class="card-text m-0">CodProducto #${producto.id}</p>
            <div id="buttonsAddCar">
              <button id="btnDisminuir${producto.id}" type="button" class="btn btn-primary" >-</button>
@@ -37,6 +31,12 @@ const cargarProductos= (productos)=>{
     });
     addEventos(productos);
 }
+
+console.log(listaProductos);
+
+
+//cargando los productos del array de objetos
+
 const addEventos=(productos)=>{
    
     productos.forEach((producto)=>{
@@ -59,26 +59,36 @@ const addEventos=(productos)=>{
             const textoTotal = document.getElementById("textoTotal");
             addCarrito(producto,itemNro);
             console.log(carrito);
-            textoTotal.innerText=carrito.reduce((acumulador,elemento)=>acumulador+elemento.precio,0);
+            textoTotal.innerText=carrito.reduce((acumulador,elemento)=>acumulador+elemento.precio*elemento.cantidad,0);
         })
 
     })
 }
 
-/* function addCarrito(producto,itemNro){
-    for(let i=1;i<=itemNro;i++)
+function addCarrito(producto,itemNro){
+    const badgeCarrito=document.getElementById("badgeCarrito");
+    let indexProducto=carrito.findIndex(unProducto=>unProducto.id==producto.id)
+    if(indexProducto>-1){
+        carrito[indexProducto].cantidad=(carrito[indexProducto].cantidad|0)+itemNro;
+    }
+    else{
+        producto.cantidad=itemNro;
         carrito.push(producto);
-    badgeCarrito.innerText=carrito.length;
-} */
+    }
+/*     for(let i=1;i<=itemNro;i++)
+        carrito.push(producto); */       
+    // badgeCarrito.innerText=carrito.length;
+    badgeCarrito.innerText=carrito.reduce((acumulador,elemento)=>acumulador+elemento.cantidad,0);
+}
 
-function addCarrito(...argumentos){
+/* function addCarrito(...argumentos){
     const badgeCarrito=document.getElementById("badgeCarrito");
     for(let i=1;i<=argumentos[1];i++)
         carrito.push(argumentos[0]);
     badgeCarrito.innerText=carrito.length;
-}
+} */
 
-cargarProductos(listaProductos);
+
 let carrito = [];
 
 

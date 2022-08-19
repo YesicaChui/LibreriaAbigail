@@ -1,0 +1,18 @@
+[
+    {"id":2,"nombre": "Cuaderno Layconsa","descripcion": "Cuaderno cuadriculado 100 hojas", "precio":12,"stock":10,"imagen":"http://s3.amazonaws.com/imagenes-sellers-mercado-ripley/2020/09/02174124/2140110401.jpg"},
+    {"id":1,"nombre": "Lapicero", "descripcion":"Tinta liquida", "precio":4,"stock":10,"imagen":"https://images.utilex.pe/000979/450x450/lapicero-bps-azul-x-1-unidad-pilot-CYWTLUIE4HCHE.png"},
+    {"id":3,"nombre": "Corrector Artesco","descripcion": "Corrector punta fina", "precio":6,"stock":10,"imagen":"https://images.utilex.pe/022501/450x450/corrector-lapicero-9-ml-x-1-unidad-artesco-CYWNAVQ2LIC7Q.png"},
+    {"id":4,"nombre": "Borrador Artesco","descripcion": "Borrador de papa para lapiz", "precio":2,"stock":10,"imagen":"https://images.utilex.pe/024947/650x650/borrador-blanco-grande-artesco-CYN7KRSAYFKXA.png"},
+    {"id":5,"nombre": "Juego de reglas Vinifan", "descripcion":"Reglas plastificadas", "precio":8,"stock":10,"imagen":"https://librecor.com/wp-content/uploads/2020/07/JUEGO-DE-ESCUADRAS-X-20CM.jpg"},
+    {"id":6,"nombre": "Corrector Faber","descripcion": "Corrector plastificado", "precio":6,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1780802493.jpg"},
+    {"id":7,"nombre": "Corrector Vinifan","descripcion": "Secado rapido", "precio":8,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/2319037009.jpg"},
+    {"id":8,"nombre": "Borrador Maped","descripcion": "Borrador lapicero", "precio":8,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1478986586.jpg"},
+    {"id":9,"nombre": "Cuaderno Universal","descripcion": "Rayado de 180 hojas", "precio":10,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/2018248815-600x600.jpg"},
+    {"id":10,"nombre": "Forro Vinifan","descripcion": "Forro A-4 Cristal", "precio":7,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/01181006.jpg"},
+    {"id":11,"nombre": "Borrador Faber","descripcion": "Borrador Negro Lapiz", "precio":2,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/2436544707.jpg"},
+    {"id":12,"nombre": "Lapiz Vikingo", "descripcion":"Lapiz bicolor", "precio":6,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1968133560.jpg"},
+    {"id":13,"nombre": "Reglas y escuadras Maped","descripcion": "Reglas plastificadas", "precio":8,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1478999890.jpg"},
+    {"id":14,"nombre": "Compas con Lapiz Artesco","descripcion": "Compas Plastico", "precio":3,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1983827692.jpg"},
+    {"id":15,"nombre": "Lapiz Artesco", "descripcion":"Lapiz grafito", "precio":8,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1983847637-600x600.jpg"},
+    {"id":16,"nombre": "Forro Artesco", "descripcion":"Forro artescofan", "precio":6,"stock":10,"imagen":"https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1478999785.jpg"}
+]

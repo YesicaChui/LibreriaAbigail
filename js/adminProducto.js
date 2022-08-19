@@ -4,6 +4,7 @@ const menuAdministrar = document.getElementById("menuAdmin");
 menuAdministrar.addEventListener("click", () => {
   cargarAdministrarProductos();
   addEventosAdministrar();
+  flagActualizarInsertarPendiente=false;
 })
 
 function cargarAdministrarProductos(cardInsertar) {
@@ -54,7 +55,7 @@ function cargarAdministrarProductos(cardInsertar) {
             <h5 class="card-title m-0 fw-bold">${nombre}</h5>
             <p class="card-text m-0">${descripcion}</p>
             <p class="card-text m-0">S/ ${precio}</p>
-            <p class="card-text m-0">Stock ${stock}</p>
+            <p class="card-text m-0 noVer">Stock ${stock}</p>
             <p class="card-text m-0">CodProducto #${id}</p>
             <div id="buttonsAddCar" class="d-flex justify-content-between">
               <button type="button" class="btn btn-outline-danger" id="btnBorrar${id}"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 30px;height:30px" alt=""></button>
@@ -81,8 +82,8 @@ const pintarCardGuardar=(idCard)=>{
           <input class="w-100  mb-2" type="text" id="inputDescripcion"  placeholder="Descripción Producto">
           <label for="inputPrecio">Precio</label>
           <input class="w-100" type="number" value=0 id="inputPrecio">
-          <label for="inputStock">Stock</label>
-          <input class="w-100 mb-3" type="number" value=0 id="inputStock">            
+          <label for="inputStock" class="noVer">Stock</label>
+          <input class="w-100 mb-3 noVer" type="number" value=1 id="inputStock">            
           <div id="buttonsAddCar" class="d-flex justify-content-between">
             <button type="button" class="btn btn-success fw-bold" id="btnGuardaProducto">Guardar</button>
             <button type="button" class="btn btn-danger fw-bold" id="btnCancelarInsertar">Cancelar</button>
@@ -139,7 +140,7 @@ const addEventosAdministrar = () => {
         flagActualizarInsertarPendiente=true;
       }
       else
-        alert("Concluya el proceso de actualizar o Insertar un producto para continuar")
+        alertPersonalizado("Concluya el proceso de actualizar o Insertar un producto para continuar",false)
     })
 
   })
@@ -196,20 +197,27 @@ const guardarProducto = (idProducto)=>{
   const inputStock=Number(document.getElementById("inputStock").value);
   if(inputUrl===""||inputNombreProducto===""||inputDescripcion===""
   ||inputPrecio<=0||inputStock<=0||isNaN(inputPrecio)||isNaN(inputStock)){
-    alert("Porfavor llene todos los datos y verifique que sean correctos");
+    alertPersonalizado("Porfavor llene todos los datos y verifique que sean correctos",false);
   }else{
     // https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1995931542.jpg
     //Blister Tajador Vinifan
     //precio 2
     // tajador bicolor
     // stock 5
-    alert("El producto se guardo exitosamente");
+    alertPersonalizado("El producto se guardo exitosamente",true);
     if(!idProducto)
     {   
       codigoCorrelativo++;
-        listaProductos.push(new Producto(
-          codigoCorrelativo,inputNombreProducto,inputDescripcion,inputPrecio,inputStock,inputUrl
-        ));
+        listaProductos.push(
+          {
+            id:codigoCorrelativo,
+            nombre:inputNombreProducto,
+            descripcion:inputDescripcion,
+            precio: inputPrecio,
+            stock:inputStock,
+            imagen:inputUrl
+          }
+      );
     }else{
       listaProductos.forEach((producto, index) => {
         if (producto.id == idProducto){
