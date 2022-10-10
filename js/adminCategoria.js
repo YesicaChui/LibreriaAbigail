@@ -23,7 +23,7 @@ function cargarMenuCategorias() {
       <div class="card-body text-center d-grid gap-2">
         <div class="d-flex flex-column  align-items-start">
           <h5 class="card-title fw-bold">Nueva Categoria</h5>
-          <input class="w-100  mb-2" >
+          <input class="w-100  mb-2" id="inputCategory">
         </div>
         <a href="#" class="btn btn-success fw-bold btn-lg" id="btnCrearCategoria">Crear Categoria</a>
       </div>
@@ -32,13 +32,14 @@ function cargarMenuCategorias() {
   cargarCategorias();
 }
 
-cargarCategorias = async () => {
+const cargarCategorias = async () => {
   const tbodyCategoria = document.getElementById("tbodyCategoria");
   const token = GetToken();
   const response = await GetCategories(token);
   if (response.status === 200) {
     const categorias = response.data.data;
     console.log(categorias)
+    tbodyCategoria.innerHTML="";
     categorias.forEach((categoria, index) => {
       console.log(categoria)
       tbodyCategoria.innerHTML += `
@@ -49,34 +50,36 @@ cargarCategorias = async () => {
               <td class="centerCelda"><button type="button" class="btn btn-outline-danger" id="btnBorrar${categoria.id}" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button> </td>
             </tr>
           `;
-
-
     });
   }
 
-
-
-  //addEventoCategoria();
+  addEventoCategoria();
 }
 
 function addEventoCategoria() {
-  addEventoEliminar();
-  addEventoPagarCarrito();
-  addEventoMasMenos();
+/*   addEventoEliminarCategoria();
+  addEventoActualizarCategtoria(); */
+  addEventoCrearCategoria();
 }
 
 
 
 function addEventoCrearCategoria() {
-  const btnPagar = document.getElementById("btnPagarCarrito");
-  btnPagar.addEventListener("click", () => {
-    alertPersonalizado("Pago Realizado correctamente", true);
-    carrito.splice(0, carrito.length);
-    const badgeCarrito = document.getElementById("badgeCarrito");
-    badgeCarrito.innerText = 0;
-    const textoTotal = document.getElementById("textoTotal");
-    textoTotal.innerText = 0;
-    //cargarCarritoCompras();
+  const btnCrearCategoria = document.getElementById("btnCrearCategoria");
+  const inputCategory = document.getElementById("inputCategory")
+  btnCrearCategoria.addEventListener("click", async () => {
+    const token = GetToken();
+    const category ={
+      name: inputCategory.value,      
+    }
+    const response = await PostCategory(category,token);
+    if (response.status === 201) {
+      alertPersonalizado("Categoria Creada correctamente", true);
+      cargarCategorias();
+    } else {
+      alertPersonalizado("Hubo un error al crear categoria", false);
+    }
+    
   });
 }
 
