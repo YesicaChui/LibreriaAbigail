@@ -121,9 +121,6 @@ btnCarrito.addEventListener("click", () => {
     cargarCarritoCompras();
 });
 
-
-
-
 const menuInicio = document.getElementById("menuInicio");
 menuInicio.addEventListener("click", () => {
     cargarProductos(listaProductos);
@@ -144,3 +141,8 @@ menuItems.forEach((menuItem) => {
     })
 
 });
+
+const menuCategorias = document.getElementById("menuCategorias");
+menuCategorias.addEventListener("click", () => {
+    cargarMenuCategorias();
+})

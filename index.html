@@ -5,12 +5,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/index.css">
-  <script defer src="./js/cargarData.js"></script>
+<!--   <script defer src="./js/cargarData.js"></script>
   <script defer src="./js/main.js"></script>
   <script defer src="./js/adminProducto.js"></script>
+  <script defer src="./js/adminCategorias.js"></script>
   <script defer src="./js/login.js"></script>
   <script defer src="./js/otrasfunciones.js"></script>
-  <script defer src="./js/carritoCompras.js"></script>
+  <script defer src="./js/carritoCompras.js"></script> -->
 </head>
 
 <body>
@@ -29,9 +30,14 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#" id="menuInicio">Inicio</a>
           </li>
-          <li class="nav-item">
-            <!-- style="display: none ;" -->
-            <a class="nav-link" href="#" id="menuAdmin" style="display: none ;">Administrar Productos</a>
+          <li class="nav-item dropdown" id="menuAdmin" style="display: none ;">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Administrar
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" id="menuProductos" >Administrar Productos</a></li>
+              <li> <a class="dropdown-item" href="#" id="menuCategorias" >Administrar Categorias</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" id="menuQuienessomos" >Quienes somos</a>
@@ -90,20 +96,67 @@
     <section class="container-fluid">
       <!-- Mis productos cargados dinamicamente -->
       <div class="row " id="productos">
-        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;">
-          <img src="https://images.utilex.pe/000979/450x450/lapicero-bps-azul-x-1-unidad-pilot-CYWTLUIE4HCHE.png"
-            class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title m-0 fw-bold">Card title</h5>
-            <p class="card-text m-0">lapicero tinta liquida</p>
-            <p class="card-text m-0">S/ 5.00</p>
-            <p class="card-text m-0">Stock 10</p>
-            <p class="card-text m-0">CodProducto #1</p>
-            <div id="buttonsAddCar" class="d-flex justify-content-between">
-              <button type="button" class="btn btn-outline-danger" id="btnBorrar"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 30px;height:30px" alt=""></button>
-            
-              <button type="button" class="btn btn-outline-info" id="btneditar"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 30px;height:30px" alt=""></button>
+        <h2 class="mt-3 fw-bold text-center">Categorias</h2>
+        <div class="col-sm-12 col-md-12 col-lg-12 m-0 p-0 flex-row " id="boxCarrito">
+          <div class="card col-sm-12 col-md-12 col-lg-12 m-2  flex-row " >
+            <table class="table">
+              <thead class="table-light">
+                <tr>
+                  <th >#</th>
+                  <th scope="col">Nombre Categoria</th>                
+                  <th colspan="2" class="align-bottom centerCelda">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Juguetes</td>
+                  <td class="centerCelda"><button type="button" class="btn btn-outline-info" id="btnEditar${id}"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 25px;height:25px" alt=""></button></td>
+                  <td class="centerCelda"><button type="button" class="btn btn-outline-danger" id="btnBorrar" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button> </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Ropa</td>
+                  <td class="centerCelda"><button type="button" class="btn btn-outline-info" id="btnEditar${id}"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 25px;height:25px" alt=""></button></td>
+                  <td class="centerCelda"><button type="button" class="btn btn-outline-danger" id="btnBorrar" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button> </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td><input class="w-100  mb-2" ></td>
+                  <td class="centerCelda"> <button type="button" class="btn btn-success fw-bold" id="btnGuardaProducto">Guardar</button></td>
+                  <td class="centerCelda"><button type="button" class="btn btn-danger fw-bold" id="btnCancelarInsertar">Cancelar</button> </td>
+                </tr>
+
+              </tbody>
+            </table>
+            <!-- <img src="https://images.utilex.pe/000979/450x450/lapicero-bps-azul-x-1-unidad-pilot-CYWTLUIE4HCHE.png"
+              class="card-img-top me-4" alt="..." style="height: 7rem;width: 7rem;">
+            <div class="card-body d-flex flex-row align-items-center justify-content-between">
+              <div style="width: 25rem;">
+                <h5 class="card-title m-0 fw-bold">Card title</h5>
+                <p class="card-text m-0">S/ 5.00</p>
+              </div>
+              <div id="buttonsAddCar">
+                <button id="btnDisminuir${producto.id}" type="button" class="btn btn-info" >-</button>
+                <span  class="mx-4" id="itemNro${producto.id}">1</span>
+                <button id="btnAumentar${producto.id}" type="button" class="btn btn-info" >+</button>
+              
+              </div>
+              <p class="card-text m-0">S/ 54.00</p>
+              <div id="buttonsAdmin" class="d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-danger" id="btnBorrar" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button>          
+              </div>
+            </div> -->
+          </div>       
+        </div>
+
+        <div class="card m-2">
+          <div class="card-body text-center d-grid gap-2">
+            <div class="d-flex flex-column  align-items-start">
+              <h5 class="card-title fw-bold">Nueva Categoria</h5>
+              <input class="w-100  mb-2" >
             </div>
+            <a href="#" class="btn btn-success fw-bold btn-lg" id="btnCrearCategoria">Crear Categoria</a>
           </div>
         </div>
       <!--   <form class="mt-5">

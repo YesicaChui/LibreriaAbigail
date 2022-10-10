@@ -1,6 +1,7 @@
 let codigoCorrelativo=listaProductos.length;
 let flagActualizarInsertarPendiente=false;
-const menuAdministrar = document.getElementById("menuAdmin");
+
+const menuAdministrar = document.getElementById("menuProductos");
 menuAdministrar.addEventListener("click", () => {
   cargarAdministrarProductos();
   addEventosAdministrar();

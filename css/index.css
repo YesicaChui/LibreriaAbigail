@@ -6,3 +6,7 @@
     max-height: 263px;
     object-fit: contain;
 }
+
+.centerCelda{
+   text-align:center ; 
+}
