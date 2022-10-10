@@ -42,6 +42,7 @@ const cargarCategorias = async () => {
     tbodyCategoria.innerHTML="";
     categorias.forEach((categoria, index) => {
       console.log(categoria)
+      if(categoria.status)
       tbodyCategoria.innerHTML += `
             <tr>
               <th class="align-middle" scope="row">${categoria.id}</th>
@@ -51,14 +52,15 @@ const cargarCategorias = async () => {
             </tr>
           `;
     });
+    addEventoCategoria(categorias);
   }
 
-  addEventoCategoria();
+
 }
 
-function addEventoCategoria() {
-/*   addEventoEliminarCategoria();
-  addEventoActualizarCategtoria(); */
+function addEventoCategoria(categorias) {
+   addEventoEliminarCategoria(categorias);
+ /* addEventoActualizarCategtoria(); */
   addEventoCrearCategoria();
 }
 
@@ -83,21 +85,23 @@ function addEventoCrearCategoria() {
   });
 }
 
-function addEventoEliminar() {
-  carrito.forEach((producto, index) => {
-    const mibtnBorrar = document.getElementById(`btnBorrar${producto.id}`);
-    mibtnBorrar.addEventListener("click", () => {
-      console.log("boton presionado", producto.id);
-      eliminarProductoCarrito(producto.id)
-      cargarCarritoCompras();
+function addEventoEliminarCategoria(categorias) {
+
+  categorias.forEach((categoria, index) => {
+    const mibtncategoria = document.getElementById(`btnBorrar${categoria.id}`);
+    mibtncategoria.addEventListener("click", async() => {
+      console.log("boton presionado", categoria.id);
+      const token = GetToken();
+      const response = await DeleteCategory( categoria.id, token);
+      if (response.status === 200) {
+        alertPersonalizado("Se elimino la categoria correctamente", true);
+        cargarCategorias();
+      } else {
+        alertPersonalizado("Hubo un error al eliminar la categoria", true);
+      }
+      
     });
   });
 }
 
-const eliminarCategoria = (codProducto) => {
-  let newCarrito = [];
-  let indexProducto = carrito.findIndex(unProducto => unProducto.id == codProducto)
-  carrito.splice(indexProducto, 1)
-  reCalculoMonto();
-}
 
