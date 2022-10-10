@@ -28,12 +28,12 @@ function cargarAdministrarProductos(cardInsertar) {
 /*   listaProductos.forEach((producto) => {
     divProductos.innerHTML += `
        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;" id="cardProducto${producto.id}">
-          <img src=${producto.imagen}
+          <img src=${producto.image}
             class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title m-0 fw-bold">${producto.nombre}</h5>
-            <p class="card-text m-0">${producto.descripcion}</p>
-            <p class="card-text m-0">S/ ${producto.precio}</p>
+            <h5 class="card-title m-0 fw-bold">${producto.name}</h5>
+            <p class="card-text m-0">${producto.description}</p>
+            <p class="card-text m-0">S/ ${producto.price}</p>
             <p class="card-text m-0">Stock ${producto.stock}</p>
             <p class="card-text m-0">CodProducto #${producto.id}</p>
             <div id="buttonsAddCar" class="d-flex justify-content-between">
@@ -46,7 +46,7 @@ function cargarAdministrarProductos(cardInsertar) {
          `
 
   }); */
-  listaProductos.forEach(({imagen,nombre,descripcion,precio,stock,id}) => {
+  listaProductos.forEach(({image:imagen,name:nombre,description:descripcion,price:precio,stock,id}) => {
     divProductos.innerHTML += `
        <div class="card col-sm-12 col-md-6 col-lg-3 m-2 " style="width: 18.1rem;" id="cardProducto${id}">
           <img src=${imagen}
@@ -165,10 +165,10 @@ const actualizarProducto = (producto) => {
   const inputDescripcion=document.getElementById("inputDescripcion");
   const inputPrecio=document.getElementById("inputPrecio");
   const inputStock=document.getElementById("inputStock");
-  inputUrl.value=producto.imagen;
-  inputNombreProducto.value=producto.nombre;
-  inputDescripcion.value=producto.descripcion;
-  inputPrecio.value=producto.precio;
+  inputUrl.value=producto.image;
+  inputNombreProducto.value=producto.name;
+  inputDescripcion.value=producto.description;
+  inputPrecio.value=producto.price;
   inputStock.value=producto.stock;
   const btnCancelar = document.getElementById("btnCancelarInsertar");
   btnCancelar.addEventListener("click", () => {
@@ -221,10 +221,10 @@ const guardarProducto = (idProducto)=>{
     }else{
       listaProductos.forEach((producto, index) => {
         if (producto.id == idProducto){
-          producto.imagen=inputUrl;
-          producto.nombre=inputNombreProducto;
-          producto.descripcion=inputDescripcion;
-          producto.precio=inputPrecio;
+          producto.image=inputUrl;
+          producto.name=inputNombreProducto;
+          producto.description=inputDescripcion;
+          producto.price=inputPrecio;
           producto.stock=inputStock;
         };
       });

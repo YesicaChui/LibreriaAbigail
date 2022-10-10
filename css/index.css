@@ -1,3 +1,8 @@
 .noVer{
     display: none;
 }
+
+#productos img{
+    max-height: 263px;
+    object-fit: contain;
+}
