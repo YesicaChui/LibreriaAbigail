@@ -1,14 +1,9 @@
 let checkLogin=0;
-verificarLogin();
+//verificarLogin();
 
 function verificarLogin(){
 
   const logeado=localStorage.getItem("Logeado");
-/*   console.log(logeado);
-  if(logeado=="true"){
-    console.log(logeado, "soy verdadero");
-    loginExitoso();
-  } */
   logeado=="true" && loginExitoso();
 }
 
@@ -18,21 +13,25 @@ console.log(btnSesion);
 
 btnSesion.addEventListener("click",()=>{
     console.log("se presiono btnsesion");
-/*     if(checkLogin==1){
-      cerrarSesion();
-    } */
+
     checkLogin==1 && cerrarSesion();
     cargarLogin();
     const btnLogin=document.getElementById("btnLogin");
-    btnLogin.addEventListener("click",()=>{
+    btnLogin.addEventListener("click",async ()=>{
         const inputUsuario=document.getElementById("inputUsuario").value;
         const inputPassword=document.getElementById("inputPassword").value;
-/*         if(inputUsuario==="Yesica"&&inputPassword==="123456"){
+        const userCredentials ={
+          username: inputUsuario,
+          password: inputPassword,
+        }
+        //inputUsuario==="Yesica"&&inputPassword==="123456"?logearse():alertPersonalizado("Credenciales incorrectas",false);//alert("Credenciales incorrectas")
+        const response = await SignIn(userCredentials);
+        if (response.status === 200) {
+          localStorage.setItem("token", response.data.access_token);
           logearse();
-        }else{
-            alert("Credenciales incorrectas");
-        } */
-        inputUsuario==="Yesica"&&inputPassword==="123456"?logearse():alertPersonalizado("Credenciales incorrectas",false);//alert("Credenciales incorrectas")
+        } else {
+          alertPersonalizado("Credenciales incorrectas",false);
+        }
     })
 });
 
@@ -98,6 +97,6 @@ function loginExitoso(){
   textoSesion.innerText="Cerrar Sesión";
   menuAdmin.removeAttribute("style");
   const textoPerfil= document.getElementById("textoPerfil");
-  textoPerfil.innerText="Yesica";
+  textoPerfil.innerText=inputUsuario.value;
   checkLogin=1;
 }
