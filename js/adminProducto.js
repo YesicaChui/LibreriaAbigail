@@ -1,4 +1,4 @@
-let codigoCorrelativo=listaProductos.length;
+//let codigoCorrelativo=listaProductos.length;
 let flagActualizarInsertarPendiente=false;
 
 const menuAdministrar = document.getElementById("menuProductos");
