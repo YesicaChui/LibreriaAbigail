@@ -35,3 +35,17 @@ const DeleteCategory = async (id, token) => {
   const data = await response.json();
   return { data, status };
 };
+
+const UpdateCategory = async (id,category, token) => {
+  const response = await fetch(`${API_URL}/categories/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify(category),
+  });
+  const status = response.status;
+  const data = await response.json();
+  return { data, status };
+};

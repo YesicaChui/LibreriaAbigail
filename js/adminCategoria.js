@@ -39,11 +39,11 @@ const cargarCategorias = async () => {
   if (response.status === 200) {
     const categorias = response.data.data;
     console.log(categorias)
-    tbodyCategoria.innerHTML="";
-    categorias.forEach((categoria, index) => {
+    tbodyCategoria.innerHTML = "";
+    categorias.forEach((categoria) => {
       console.log(categoria)
-      if(categoria.status)
-      tbodyCategoria.innerHTML += `
+      if (categoria.status)
+        tbodyCategoria.innerHTML += `
             <tr>
               <th class="align-middle" scope="row">${categoria.id}</th>
               <td class="align-middle">${categoria.name}</td>
@@ -59,8 +59,8 @@ const cargarCategorias = async () => {
 }
 
 function addEventoCategoria(categorias) {
-   addEventoEliminarCategoria(categorias);
- /* addEventoActualizarCategtoria(); */
+  addEventoEliminarCategoria(categorias);
+  addEventoEditarCategoria(categorias);
   addEventoCrearCategoria();
 }
 
@@ -71,37 +71,107 @@ function addEventoCrearCategoria() {
   const inputCategory = document.getElementById("inputCategory")
   btnCrearCategoria.addEventListener("click", async () => {
     const token = GetToken();
-    const category ={
-      name: inputCategory.value,      
+    const category = {
+      name: inputCategory.value,
     }
-    const response = await PostCategory(category,token);
+    const response = await PostCategory(category, token);
     if (response.status === 201) {
       alertPersonalizado("Categoria Creada correctamente", true);
       cargarCategorias();
     } else {
       alertPersonalizado("Hubo un error al crear categoria", false);
     }
-    
+
   });
 }
 
 function addEventoEliminarCategoria(categorias) {
 
-  categorias.forEach((categoria, index) => {
-    const mibtncategoria = document.getElementById(`btnBorrar${categoria.id}`);
-    mibtncategoria.addEventListener("click", async() => {
-      console.log("boton presionado", categoria.id);
-      const token = GetToken();
-      const response = await DeleteCategory( categoria.id, token);
-      if (response.status === 200) {
-        alertPersonalizado("Se elimino la categoria correctamente", true);
-        cargarCategorias();
-      } else {
-        alertPersonalizado("Hubo un error al eliminar la categoria", true);
-      }
-      
-    });
+  categorias.forEach(setBtnDeleteCategoria);
+}
+
+const setBtnDeleteCategoria = (categoria) => {
+  const mibtncategoria = document.getElementById(`btnBorrar${categoria.id}`);
+  mibtncategoria.addEventListener("click", async () => {
+    console.log("boton presionado", categoria.id);
+    const token = GetToken();
+    const response = await DeleteCategory(categoria.id, token);
+    if (response.status === 200) {
+      alertPersonalizado("Se elimino la categoria correctamente", true);
+      cargarCategorias();
+    } else {
+      alertPersonalizado("Hubo un error al eliminar la categoria", true);
+    }
+
   });
 }
 
+function addEventoEditarCategoria(categorias) {
 
+  categorias.forEach(setBtnEditarCategoria);
+}
+
+const setBtnEditarCategoria=(categoria) => {
+  const mibtnEditarCategoria = document.getElementById(`btnEditar${categoria.id}`);
+  mibtnEditarCategoria.addEventListener("click", () => {
+    console.log("boton presionado", categoria.id);
+    mibtnEditarCategoria.parentElement.parentElement.innerHTML = `
+        <tr>
+          <th class="align-middle" scope="row">${categoria.id}</th>
+          <td class="align-middle"><input class="w-100  mb-2"  id="inputCategoria${categoria.id}" value=${categoria.name}></td>
+          <td class="centerCelda"> <button type="button" class="btn btn-success fw-bold" id="btnGuardaCategoria${categoria.id}">Guardar</button></td>
+          <td class="centerCelda"><button type="button" class="btn btn-danger fw-bold" id="btnCancelarEditarCategoria${categoria.id}">Cancelar</button> </td>
+        </tr>
+    `;
+    addEventoCancelarEditarCategoria(categoria)
+    addEventoGuardaCategoria(categoria)
+  });
+}
+
+function addEventoGuardaCategoria(categoria){
+  const btnGuardaCategoria = document.getElementById(`btnGuardaCategoria${categoria.id}`);
+  const inputCategoria = document.getElementById(`inputCategoria${categoria.id}`);
+  btnGuardaCategoria.addEventListener("click", async() => {
+    const category = {
+      name: inputCategoria.value,
+    }
+    const token = GetToken();
+    const response = await UpdateCategory(categoria.id,category, token);
+    if (response.status === 200) {
+      alertPersonalizado("Se actualizo la categoria correctamente", true);
+      console.log("boton presionado", categoria.id);
+      btnGuardaCategoria.parentElement.parentElement.innerHTML = `
+        <tr>
+          <th class="align-middle" scope="row">${categoria.id}</th>
+          <td class="align-middle">${category.name}</td>
+          <td class="centerCelda"><button type="button" class="btn btn-outline-info" id="btnEditar${categoria.id}"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 25px;height:25px" alt=""></button></td>
+          <td class="centerCelda"><button type="button" class="btn btn-outline-danger" id="btnBorrar${categoria.id}" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button> </td>
+        </tr>
+      `;
+      setBtnDeleteCategoria(categoria)
+      setBtnEditarCategoria(categoria)
+    } else {
+      alertPersonalizado("Hubo un error al actualizar la categoria", false);
+    }
+
+
+
+    });
+}
+
+function addEventoCancelarEditarCategoria(categoria){
+  const btnCancelarEditarCategoria = document.getElementById(`btnCancelarEditarCategoria${categoria.id}`);
+  btnCancelarEditarCategoria.addEventListener("click", () => {
+      console.log("boton presionado", categoria.id);
+      btnCancelarEditarCategoria.parentElement.parentElement.innerHTML = `
+        <tr>
+          <th class="align-middle" scope="row">${categoria.id}</th>
+          <td class="align-middle">${categoria.name}</td>
+          <td class="centerCelda"><button type="button" class="btn btn-outline-info" id="btnEditar${categoria.id}"><img src="https://cdn-icons-png.flaticon.com/512/104/104668.png" style="width: 25px;height:25px" alt=""></button></td>
+          <td class="centerCelda"><button type="button" class="btn btn-outline-danger" id="btnBorrar${categoria.id}" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button> </td>
+        </tr>
+      `;
+      setBtnDeleteCategoria(categoria)
+      setBtnEditarCategoria(categoria)
+    });
+}
