@@ -20,6 +20,25 @@ const GetProductById = async (id) => {
   const data = await response.json();
   return data;
 };
+const UpdateProductForm = async (id,product, token) => {
+  let formData = new FormData();
+  product.image!==""?formData.append("image", product.image.files[0]):formData.append("image", null);
+  formData.append("name", product.name);
+  formData.append("description", product.description);
+  formData.append("price", product.price);
+  formData.append("stock", product.stock);
+  formData.append("category_id", product.category_id);
+  const response = await fetch(`${API_URL}/products/${id}`, {
+    method: "PUT",
+    headers: {    
+      Authorization: "Bearer " + token,
+    },
+    body: formData,
+  });
+  const status = response.status;
+  const data = await response.json();
+  return { data, status };
+};
 
 const PostProductForm = async (product,token) => {
   let formData = new FormData();

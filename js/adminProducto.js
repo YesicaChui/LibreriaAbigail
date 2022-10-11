@@ -202,6 +202,8 @@ const actualizarProducto = (producto) => {
   const inputPrecio = document.getElementById("inputPrecio");
   const inputStock = document.getElementById("inputStock");
   const imgEl = document.getElementById('img-preview')
+  const selectCategoria = document.getElementById("selectCategoria");
+  selectCategoria.value=producto.category_id;
   imgEl.src = producto.image;
   inputNombreProducto.value = producto.name;
   inputDescripcion.value = producto.description;
@@ -229,15 +231,14 @@ const actualizarProducto = (producto) => {
 
 const guardarProducto = async (idProducto) => {
   const inputUrl = document.getElementById("inputUrl");
+  const imgEl = document.getElementById('img-preview')
   const inputNombreProducto = document.getElementById("inputNombreProducto").value;
   const inputDescripcion = document.getElementById("inputDescripcion").value;
   const inputPrecio = Number(document.getElementById("inputPrecio").value);
   const selectCategoria = document.getElementById("selectCategoria");
   const selectCategoriaValue = selectCategoria.options[selectCategoria.selectedIndex].value;
   const inputStock = Number(document.getElementById("inputStock").value);
-  console.log(selectCategoriaValue);
-  console.log(isNaN(selectCategoriaValue))
-  if (inputUrl.value === "" || inputNombreProducto === "" || inputDescripcion === ""
+  if (imgEl.getAttribute('src')==="" || inputNombreProducto === "" || inputDescripcion === ""
     || inputPrecio <= 0 || inputStock <= 0 || isNaN(inputPrecio) || isNaN(inputStock) || isNaN(selectCategoriaValue)) {
     alertPersonalizado("Porfavor llene todos los datos y verifique que sean correctos", false);
   } else {
@@ -262,15 +263,26 @@ const guardarProducto = async (idProducto) => {
       }
 
     } else {
-      listaProductos.forEach((producto, index) => {
-        if (producto.id == idProducto) {
-          producto.image = inputUrl;
-          producto.name = inputNombreProducto;
-          producto.description = inputDescripcion;
-          producto.price = inputPrecio;
-          producto.stock = inputStock;
-        };
-      });
+      console.log(inputUrl);
+      console.log(inputUrl==="");
+      const token = GetToken();
+      const product = {
+        image: inputUrl,
+        name: inputNombreProducto,
+        description: inputDescripcion,
+        price: inputPrecio,
+        stock: inputStock,
+        category_id: selectCategoriaValue,
+      }
+      const response = await UpdateProductForm(idProducto,product, token);
+      console.log(response.status);
+      console.log(response)
+      if (response.status === 200) {
+        alertPersonalizado("Producto actualizado correctamente", true);
+        iniciarAdminProductos()
+      } else {
+        alertPersonalizado("Hubo un error al actualizar el producto", false);
+      }
     }
     //guardarProductosStorage();
     /* cargarAdministrarProductos();
