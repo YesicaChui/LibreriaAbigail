@@ -33,16 +33,22 @@ const PostProduct = async (product) => {
   return data;
 };
 
-const UploadProductImage = async (image) => {
+const PostProductForm = async (product,token) => {
   let formData = new FormData();
-  formData.append("productImage", image);
-  const response = await fetch(`${API_URL}/productos/productos/upload`, {
+  formData.append("image", product.image.files[0]);
+  formData.append("name", product.name);
+  formData.append("description", product.description);
+  formData.append("price", product.price);
+  formData.append("stock", product.stock);
+  formData.append("category_id", product.category_id);
+  const response = await fetch(`${API_URL}/products`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
     body: formData,
   });
+  const status = response.status;
   const data = await response.json();
-  return data;
+  return { data, status };
 };

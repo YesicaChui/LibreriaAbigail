@@ -1,12 +1,15 @@
 let listaProductos={};
-cargarDataServer();
+cargarPintar();
+async function cargarPintar(){
+    await cargarDataServer();
+    cargarProductos(listaProductos);
+}
 async function cargarData(){
     let res = await fetch("/js/data/data.json")
     let json = await res.json();
     listaProductos =json;
     console.log(listaProductos)
     listaProductos=JSON.parse(localStorage.getItem("listaProductos"))||listaProductos;
-    cargarProductos(listaProductos);
     console.log("wil")
 }
 async function cargarDataServer(){
@@ -15,6 +18,5 @@ async function cargarDataServer(){
     listaProductos =json.data;
     console.log(listaProductos)
     listaProductos=listaProductos||JSON.parse(localStorage.getItem("listaProductos"));
-    cargarProductos(listaProductos);
     console.log("wil")
 }

@@ -1,14 +1,28 @@
 //let codigoCorrelativo=listaProductos.length;
 let flagActualizarInsertarPendiente=false;
-
+let selectCategorias=[];
 const menuAdministrar = document.getElementById("menuProductos");
-menuAdministrar.addEventListener("click", () => {
+const iniciarAdminProductos = async() => {
+  await cargarDataServer();
   cargarAdministrarProductos();
   addEventosAdministrar();
+  cargarSelectCategorias();
   flagActualizarInsertarPendiente=false;
-})
+}
+menuAdministrar.addEventListener("click", iniciarAdminProductos)
+
+
+const cargarSelectCategorias =async()=>{
+  const token = GetToken();
+  const response = await GetCategories(token);
+  if (response.status === 200) {
+    selectCategorias = response.data.data;
+    console.log(selectCategorias)
+  }
+}
 
 function cargarAdministrarProductos(cardInsertar) {
+  
   const divProductos = document.getElementById("productos");
   divProductos.innerHTML = `
     <div id="cardInsertar" class="card col-sm-12 col-md-6 col-lg-3 m-2 d-flex align-items-center pt-5" style="width: 18.1rem;">
@@ -75,14 +89,19 @@ const pintarCardGuardar=(idCard)=>{
   card.innerHTML = `
       <div class="card-body tex">
           <h5 class="card-title m-0 fw-bold mb-3 text-center" id= "tituloCardInsertar">Inserte los datos del Producto</h5>
-          <label for="inputUrl">URL Imagen - Link</label>
-          <input class="w-100 mb-2" type="text" id="inputUrl" placeholder="URL Imagen">
+          <label for="inputUrl">Imagen del Producto</label>
+          <input class="w-100 mb-2" type="file" id="inputUrl" placeholder="URL Imagen">
           <label for="inputNombreProducto" >Nombre de Producto</label>
           <input class="w-100  mb-2" type="text" id="inputNombreProducto" placeholder="Nombre de Producto">
           <label for="inputDescripcion">Descripción Producto</label>
           <input class="w-100  mb-2" type="text" id="inputDescripcion"  placeholder="Descripción Producto">
           <label for="inputPrecio">Precio</label>
           <input class="w-100" type="number" value=0 id="inputPrecio">
+          <label for="selectCategoria">Categoria</label>
+          <select class="form-select" aria-label="Default select example" id="selectCategoria">
+            <option selected>Categoria</option>
+            ${selectCategorias.map((selectCategoria)=>`<option value="${selectCategoria.id}">${selectCategoria.name}</option>`)}
+          </select>
           <label for="inputStock" class="noVer">Stock</label>
           <input class="w-100 mb-3 noVer" type="number" value=1 id="inputStock">            
           <div id="buttonsAddCar" class="d-flex justify-content-between">
@@ -190,35 +209,41 @@ const actualizarProducto = (producto) => {
   addEventosAdministrar(); */
 }
 
-const guardarProducto = (idProducto)=>{
-  const inputUrl = document.getElementById("inputUrl").value;
+const guardarProducto = async(idProducto)=>{
+  const inputUrl = document.getElementById("inputUrl");
   const inputNombreProducto=document.getElementById("inputNombreProducto").value;
   const inputDescripcion=document.getElementById("inputDescripcion").value;
   const inputPrecio=Number(document.getElementById("inputPrecio").value);
+  const selectCategoria=document.getElementById("selectCategoria");
+  const selectCategoriaValue = selectCategoria.options[selectCategoria.selectedIndex].value;
   const inputStock=Number(document.getElementById("inputStock").value);
-  if(inputUrl===""||inputNombreProducto===""||inputDescripcion===""
-  ||inputPrecio<=0||inputStock<=0||isNaN(inputPrecio)||isNaN(inputStock)){
+  console.log(selectCategoriaValue);
+  console.log(isNaN(selectCategoriaValue))
+  if(inputUrl.value===""||inputNombreProducto===""||inputDescripcion===""
+  ||inputPrecio<=0||inputStock<=0||isNaN(inputPrecio)||isNaN(inputStock)||isNaN(selectCategoriaValue)){
     alertPersonalizado("Porfavor llene todos los datos y verifique que sean correctos",false);
-  }else{
-    // https://www.distribuidoranavarrete.com.pe/wp-content/uploads/1995931542.jpg
-    //Blister Tajador Vinifan
-    //precio 2
-    // tajador bicolor
-    // stock 5
-    alertPersonalizado("El producto se guardo exitosamente",true);
+  }else{    
     if(!idProducto)
-    {   
-      codigoCorrelativo++;
-        listaProductos.push(
-          {
-            id:codigoCorrelativo,
-            nombre:inputNombreProducto,
-            descripcion:inputDescripcion,
-            precio: inputPrecio,
-            stock:inputStock,
-            imagen:inputUrl
-          }
-      );
+    { 
+      const token = GetToken();
+      const product = {
+        image: inputUrl,
+        name: inputNombreProducto,
+        description: inputDescripcion,
+        price: inputPrecio,
+        stock: inputStock,
+        category_id: selectCategoriaValue,
+      }
+      const response = await PostProductForm(product, token);
+      console.log(response.status);
+      console.log(response)
+      if (response.status === 201) {
+        alertPersonalizado("Producto Creado correctamente", true);  
+        iniciarAdminProductos()      
+      } else {
+        alertPersonalizado("Hubo un error al crear el producto", false);
+      }  
+
     }else{
       listaProductos.forEach((producto, index) => {
         if (producto.id == idProducto){
@@ -230,10 +255,11 @@ const guardarProducto = (idProducto)=>{
         };
       });
     }
-    guardarProductosStorage();
-    cargarAdministrarProductos();
+    //guardarProductosStorage();
+    /* cargarAdministrarProductos();
     addEventosAdministrar();
-    flagActualizarInsertarPendiente=false
+    flagActualizarInsertarPendiente=false */
+    
   }
 
 }
