@@ -21,18 +21,6 @@ const GetProductById = async (id) => {
   return data;
 };
 
-const PostProduct = async (product) => {
-  const response = await fetch(`${API_URL}/productos/productos/create`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-  const data = await response.json();
-  return data;
-};
-
 const PostProductForm = async (product,token) => {
   let formData = new FormData();
   formData.append("image", product.image.files[0]);
@@ -47,6 +35,18 @@ const PostProductForm = async (product,token) => {
       Authorization: "Bearer " + token,
     },
     body: formData,
+  });
+  const status = response.status;
+  const data = await response.json();
+  return { data, status };
+};
+
+const DeleteProduct = async (id, token) => {
+  const response = await fetch(`${API_URL}/products/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   });
   const status = response.status;
   const data = await response.json();

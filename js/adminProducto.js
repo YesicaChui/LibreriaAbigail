@@ -166,14 +166,16 @@ const addEventosAdministrar = () => {
   })
 }
 
-const eliminarProducto = (codProducto) => {
-  listaProductos.forEach((producto, index) => {
-    //if (producto.id == codProducto) listaProductos.splice(index, 1);
-    producto.id == codProducto && listaProductos.splice(index, 1);
-  });
-  guardarProductosStorage();
-  cargarAdministrarProductos();
-  addEventosAdministrar();
+const eliminarProducto = async(codProducto) => {
+  const token = GetToken();
+  const response = await DeleteProduct(codProducto, token);
+  if (response.status === 200) {
+    alertPersonalizado("Se elimino el producto correctamente", true);
+    iniciarAdminProductos();
+  } else {
+    alertPersonalizado("Hubo un error al eliminar el producto", false);
+  }
+
 }
 
 const actualizarProducto = (producto) => {
