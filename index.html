@@ -5,7 +5,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/index.css">
-<!--   <script defer src="./js/adminProducto.js"></script>
+  <script defer src="./js/adminProducto.js"></script>
   <script defer src="./js/adminCategoria.js"></script>
   <script defer src="./js/main.js"></script>
   <script defer src="./js/login.js"></script>
@@ -14,7 +14,8 @@
   <script defer src="./js/services/AuthServices.js"></script>
   <script defer src="./js/services/CategoriesServices.js"></script>
   <script defer src="./js/services/ProductsServices.js"></script>
-  <script defer src="./js/services/cargarData.js"></script> -->
+  <script defer src="./js/services/RegisterServices.js"></script>
+  <script defer src="./js/services/cargarData.js"></script>
 </head>
 
 <body>
@@ -168,41 +169,41 @@
           <h2 class="title">Registrarse</h2>
     
           <div class="inputContainer">
-            <input type="text" class="input" placeholder="a">
+            <input type="text" class="input" placeholder="a" id="inputFirstName">
             <label for="" class="label">Nombre</label>
           </div>
 
           <div class="inputContainer">
-            <input type="text" class="input" placeholder="a">
+            <input type="text" class="input" placeholder="a" id="inputLastName">
             <label for="" class="label">Apellido</label>
           </div>
 
           <div class="inputContainer">
-            <input type="number" class="input" placeholder="a">
+            <input type="number" class="input" placeholder="a" id="inputPhone">
             <label for="" class="label">Telefono</label>
           </div>
 
           <div class="inputContainer">
-            <input type="email" class="input" placeholder="a">
+            <input type="email" class="input" placeholder="a" id="inputEmail">
             <label for="" class="label">Correo</label>
           </div>
     
           <div class="inputContainer">
-            <input type="text" class="input" placeholder="a">
+            <input type="text" class="input" placeholder="a" id="inputUsernameRegister">
             <label for="" class="label">Username</label>
           </div>
     
           <div class="inputContainer">
-            <input type="password" class="input" placeholder="a">
+            <input type="password" class="input" placeholder="a" id="inputPasswordRegister">
             <label for="" class="label">Contraseña</label>
           </div>
     
           <div class="inputContainer">
-            <input type="password" class="input" placeholder="a">
+            <input type="password" class="input" placeholder="a" id="inputConfirmPassword">
             <label for="" class="label">Confirmar contraseña</label>
           </div>
     
-          <input type="button" class="submitBtn" value="Registrarse">
+          <input type="button" class="submitBtn" id="inputRegistro" value="Registrarse">
         </form>
         </div>
       </div>
