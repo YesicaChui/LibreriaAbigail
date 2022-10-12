@@ -11,7 +11,7 @@ console.log("se cargo archivo login")
 const btnSesion = document.getElementById("btnSesion");
 console.log(btnSesion);
 
-const cargarRegistrarse=()=>{
+const cargarRegistrarse = () => {
   const divProductos = document.getElementById("productos");
   divProductos.innerHTML = `
         <div class="signupFrm">
@@ -88,7 +88,7 @@ const cargarRegistrarse=()=>{
   });
 }
 
-const iniciarLogin=() => {
+const iniciarLogin = () => {
   console.log("se presiono btnsesion");
 
   checkLogin == 1 && cerrarSesion();
@@ -106,14 +106,22 @@ const iniciarLogin=() => {
     const response = await SignIn(userCredentials);
     if (response.status === 200) {
       localStorage.setItem("token", response.data.access_token);
-      localStorage.setItem("rol_id",response.data.data.role.id);
-      logearse();
+      console.log("se obtuvo el token del usuario")
+      const response2 = await GetUserProfile(response.data.access_token);
+      if (response2.status === 200) {
+        console.log("se obtuvo el profile del usuario")
+        console.log(response2.data);
+        localStorage.setItem("rol_id", response2.data.data.role.id);
+        logearse();
+      } else {
+        alertPersonalizado("Error leyendo el userProfile", false);
+      }
     } else {
       alertPersonalizado("Credenciales incorrectas", false);
     }
   })
 
-  btnRegister.addEventListener("click", ()=>cargarRegistrarse())
+  btnRegister.addEventListener("click", () => cargarRegistrarse())
 
 }
 
@@ -182,7 +190,7 @@ function loginExitoso() {
   const textoSesion = document.getElementById("textoSesion");
   textoSesion.innerText = "Cerrar Sesión";
   console.log(localStorage.getItem("rol_id"))
-  if( localStorage.getItem("rol_id")==1)
+  if (localStorage.getItem("rol_id") == 1)
     menuAdmin.removeAttribute("style");
   const textoPerfil = document.getElementById("textoPerfil");
   textoPerfil.innerText = inputUsuario.value;

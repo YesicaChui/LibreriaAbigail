@@ -48,3 +48,14 @@ const GetToken = () => {
   }
   return token;
 };
+
+const GetUserProfile = async (token) => {
+  const response = await fetch(`${API_URL}/users/oneProfile`, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  const status = response.status;
+  const data = await response.json();
+  return { data, status };
+};
