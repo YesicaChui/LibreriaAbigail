@@ -106,6 +106,7 @@ const iniciarLogin=() => {
     const response = await SignIn(userCredentials);
     if (response.status === 200) {
       localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("rol_id",response.data.data.role.id);
       logearse();
     } else {
       alertPersonalizado("Credenciales incorrectas", false);
@@ -180,8 +181,11 @@ function loginExitoso() {
   const menuAdmin = document.getElementById("menuAdmin");
   const textoSesion = document.getElementById("textoSesion");
   textoSesion.innerText = "Cerrar Sesión";
-  menuAdmin.removeAttribute("style");
+  console.log(localStorage.getItem("rol_id"))
+  if( localStorage.getItem("rol_id")==1)
+    menuAdmin.removeAttribute("style");
   const textoPerfil = document.getElementById("textoPerfil");
   textoPerfil.innerText = inputUsuario.value;
   checkLogin = 1;
+  cargarProductos(listaProductos);
 }
