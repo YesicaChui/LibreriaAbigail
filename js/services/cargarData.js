@@ -13,7 +13,7 @@ async function cargarData(){
     console.log("wil")
 }
 async function cargarDataServer(){
-    let res = await fetch("http://127.0.0.1:5000/products")
+    let res = await fetch(`${API_URL}/products`)
     let json = await res.json();
     listaProductos =json.data;
     console.log(listaProductos)
