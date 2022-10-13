@@ -1,15 +1,6 @@
 let checkLogin = 0;
-//verificarLogin();
 
-function verificarLogin() {
-
-  const logeado = localStorage.getItem("Logeado");
-  logeado == "true" && loginExitoso();
-}
-
-console.log("se cargo archivo login")
 const btnSesion = document.getElementById("btnSesion");
-console.log(btnSesion);
 
 const cargarRegistrarse = () => {
   const divProductos = document.getElementById("productos");
@@ -89,8 +80,6 @@ const cargarRegistrarse = () => {
 }
 
 const iniciarLogin = () => {
-  console.log("se presiono btnsesion");
-
   checkLogin == 1 && cerrarSesion();
   cargarLogin();
   const btnLogin = document.getElementById("btnLogin");
@@ -109,10 +98,9 @@ const iniciarLogin = () => {
       console.log("se obtuvo el token del usuario")
       const response2 = await GetUserProfile(response.data.access_token);
       if (response2.status === 200) {
-        console.log("se obtuvo el profile del usuario")
-        console.log(response2.data);
-        localStorage.setItem("rol_id", response2.data.data.role.id);
-        logearse();
+        alertPersonalizado("Credenciales correctas", true);
+        loginExitoso(response2.data.data.role.id,response2.data.data.username);
+        cargarProductos(listaProductos);
       } else {
         alertPersonalizado("Error leyendo el userProfile", false);
       }
@@ -147,13 +135,7 @@ const cargarLogin = () => {
   `;
 
 }
-const logearse = () => {
-  // alert("Credenciales correctas");
-  alertPersonalizado("Credenciales correctas", true);
-  localStorage.setItem("Logeado", true);
-  localStorage.setItem("Nombre", inputUsuario);
-  loginExitoso();
-}
+
 
 const alertPersonalizado = (mensaje, isCorrecto) => {
   if (isCorrecto) {
@@ -173,27 +155,22 @@ const alertPersonalizado = (mensaje, isCorrecto) => {
 }
 
 const cerrarSesion = () => {
-  const menuAdmin = document.getElementById("menuAdmin");
+/*   const menuAdmin = document.getElementById("menuAdmin");
   menuAdmin.setAttribute("style", "display:none");
   const textoSesion = document.getElementById("textoSesion");
   textoSesion.innerText = "Inicia Sesión";
   const textoPerfil = document.getElementById("textoPerfil");
-  textoPerfil.innerText = "Hola";
-  localStorage.setItem("Logeado", false);
+  textoPerfil.innerText = "Hola"; */
+  SignOut();
 }
 
-
-
-function loginExitoso() {
-  console.log("login exitoso")
+function loginExitoso(rol_id, nombrePerfil) {
   const menuAdmin = document.getElementById("menuAdmin");
   const textoSesion = document.getElementById("textoSesion");
   textoSesion.innerText = "Cerrar Sesión";
-  console.log(localStorage.getItem("rol_id"))
-  if (localStorage.getItem("rol_id") == 1)
+  if (rol_id == 1)
     menuAdmin.removeAttribute("style");
   const textoPerfil = document.getElementById("textoPerfil");
-  textoPerfil.innerText = inputUsuario.value;
+  textoPerfil.innerText = nombrePerfil;
   checkLogin = 1;
-  cargarProductos(listaProductos);
 }

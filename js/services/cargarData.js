@@ -1,5 +1,5 @@
 let listaProductos={};
-cargarPintar();
+
 async function cargarPintar(){
     await cargarDataServer();
     cargarProductos(listaProductos);

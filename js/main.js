@@ -1,10 +1,4 @@
 
-/* let almacenados = JSON.parse(localStorage.getItem("listaProductos"));
-console.log(almacenados,"probando");
-if(almacenados){
-    listaProductos=almacenados;    
-} */
-//Aplicando operador OR
 const cargarProductos = (productos) => {
     const divProductos = document.getElementById("productos");
     divProductos.innerHTML = "";
@@ -128,9 +122,9 @@ menuInicio.addEventListener("click", () => {
 
 
 const menuItems = document.querySelectorAll(".nav-item");
-console.log(menuItems);
 
-console.log("-------------");
+
+
 menuItems.forEach((menuItem) => {
     console.log(menuItem);
     menuItem.addEventListener("mouseenter", () => {
@@ -146,3 +140,17 @@ const menuCategorias = document.getElementById("menuCategorias");
 menuCategorias.addEventListener("click", () => {
     cargarMenuCategorias();
 })
+
+cargarPintar();
+const verificarLogin = async()=>{
+    if(isAuth()){       
+        const response2 = await GetUserProfile(GetToken());
+        if (response2.status === 200) {         
+          loginExitoso(response2.data.data.role.id,response2.data.data.username);
+        } else {
+          alertPersonalizado("Error leyendo el userProfile", false);
+        }
+    }
+}
+verificarLogin();
+
