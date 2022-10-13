@@ -85,21 +85,6 @@ const rejectAuth=(msg)=>{
     iniciarLogin();
 }
 
-function addCarrito(producto, itemNro) {
-    const badgeCarrito = document.getElementById("badgeCarrito");
-    let indexProducto = carrito.findIndex(unProducto => unProducto.id == producto.id)
-    if (indexProducto > -1) {
-        carrito[indexProducto].cantidad = (carrito[indexProducto].cantidad | 0) + itemNro;
-    }
-    else {
-        producto.cantidad = itemNro;
-        carrito.push(producto);
-    }
-
-    badgeCarrito.innerText = carrito.reduce((acumulador, elemento) => acumulador + elemento.cantidad, 0);
-}
-
-
 function filtrarProductos(inputProducto) {
     //    const filtrados = listaProductos.filter((producto)=>producto.name.toUpperCase().indexOf(inputProducto.toUpperCase())!==-1);
     const filtrados = listaProductos.filter((producto) => producto.name.toUpperCase().includes(inputProducto.toUpperCase()));
@@ -123,7 +108,12 @@ inputProducto.addEventListener("keydown", () => {
 
 const btnCarrito = document.getElementById("btnCarrito");
 btnCarrito.addEventListener("click", () => {
-    cargarCarritoCompras();
+    if (isAuth()) {
+        cargarCarritoCompras();
+    }else{
+        rejectAuth("Debe logearse para añadir productos a su carrito");
+    }
+
 });
 
 const menuInicio = document.getElementById("menuInicio");
@@ -132,25 +122,31 @@ menuInicio.addEventListener("click", () => {
 })
 
 
-const menuItems = document.querySelectorAll(".nav-item");
 
-
-
-menuItems.forEach((menuItem) => {
-    console.log(menuItem);
-    menuItem.addEventListener("mouseenter", () => {
-        menuItem.setAttribute("style", "background-color: gray")
-    })
-    menuItem.addEventListener("mouseleave", () => {
-        menuItem.removeAttribute("style")
-    })
-
-});
 
 const menuCategorias = document.getElementById("menuCategorias");
 menuCategorias.addEventListener("click", () => {
     cargarMenuCategorias();
 })
+
+
+
+const addEfectos=()=>{
+    const menuItems = document.querySelectorAll(".nav-item");
+
+    menuItems.forEach((menuItem) => {
+        console.log(menuItem);
+        menuItem.addEventListener("mouseenter", () => {
+            menuItem.setAttribute("style", "background-color: gray")
+        })
+        menuItem.addEventListener("mouseleave", () => {
+            menuItem.removeAttribute("style")
+        })
+    
+    });
+}
+
+addEfectos();
 
 cargarPintar();
 const verificarLogin = async () => {

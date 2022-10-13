@@ -9,20 +9,21 @@ function cargarCarritoCompras(){
       <div class="card-body text-center d-grid gap-2">
         <div class="d-flex justify-content-between">
           <h5 class="card-title fw-bold">SubTotal</h5>
-          <h5 class="card-text fw-bold" >S/. <span id="subTotalCarrito">${carrito.reduce((acumulador,elemento)=>acumulador+elemento.price*elemento.cantidad,0)}</span></h5>
+          <h5 class="card-text fw-bold" >S/. <span id="subTotalCarrito"></span></h5>
         </div>
         <div class="d-flex justify-content-between">
           <h5 class="card-title fw-bold">IGV</h5>
-          <h5 class="card-text fw-bold" >S/. <span id="IGVCarrito">${carrito.reduce((acumulador,elemento)=>acumulador+elemento.price*elemento.cantidad,0)}</span></h5>
+          <h5 class="card-text fw-bold" >S/. <span id="IGVCarrito"></span></h5>
         </div>
           <div class="d-flex justify-content-between">
           <h5 class="card-title fw-bold">Total</h5>
-          <h5 class="card-text fw-bold" >S/. <span id="montoTotalCarrito">${carrito.reduce((acumulador,elemento)=>acumulador+elemento.price*elemento.cantidad,0)}</span></h5>
+          <h5 class="card-text fw-bold" >S/. <span id="montoTotalCarrito"></span></h5>
         </div>
         <a href="#" class="btn btn-success fw-bold btn-lg" id="btnPagarCarrito">Pagar</a>
       </div>
     </div>
       `;
+      leerCarrito()
       cargarProductosCarrito();
 }
 
@@ -33,22 +34,22 @@ function cargarProductosCarrito(){
 
           divProductosCarrito.innerHTML +=`
           <div class="card col-sm-12 col-md-6 col-lg-12 m-2 ps-3 flex-row " >
-          <img src= ${producto.image}
+          <img src= ${producto.product.image}
             class="card-img-top me-4" alt="..." style="height: 7rem;width: 7rem;">
           <div class="card-body d-flex flex-row align-items-center justify-content-between">
             <div style="width: 25rem;">
-              <h5 class="card-title m-0 fw-bold">${producto.name}</h5>
-              <p class="card-text m-0">S/ ${producto.price}</p>
+              <h5 class="card-title m-0 fw-bold">${producto.product.name}</h5>
+              <p class="card-text m-0">S/ ${producto.product.price}</p>
             </div>
             <div id="buttonsAddCar">
-              <button id="btnDisminuir${producto.id}" type="button" class="btn btn-info" >-</button>
-              <span  class="mx-4" id="itemNroCarrito${producto.id}">${producto.cantidad}</span>
-              <button id="btnAumentar${producto.id}" type="button" class="btn btn-info" >+</button>
+              <button id="btnDisminuir${producto.product.id}" type="button" class="btn btn-info" >-</button>
+              <span  class="mx-4" id="itemNroCarrito${producto.product.id}">${producto.quantity}</span>
+              <button id="btnAumentar${producto.product.id}" type="button" class="btn btn-info" >+</button>
             
             </div>
-            <p class="card-text m-0 ">S/ <span id="subtotalCarrito${producto.id}">${producto.price*producto.cantidad}</span></p>
+            <p class="card-text m-0 ">S/ <span id="subtotalCarrito${producto.product.id}">${producto.product.price*producto.quantity}</span></p>
             <div id="buttonsAdmin" class="d-flex justify-content-between">
-              <button type="button" class="btn btn-outline-danger" id="btnBorrar${producto.id}" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button>          
+              <button type="button" class="btn btn-outline-danger" id="btnBorrar${producto.product.id}" style="width: 50px;height:40px"><img src="https://cdn-icons-png.flaticon.com/512/54/54324.png" style="width: 20px;height:20px" alt=""></button>          
             </div>
           </div>
           </div> 
@@ -56,17 +57,10 @@ function cargarProductosCarrito(){
 
       
   });
-  addEventoCarrito();
+ // addEventoCarrito();
 }
 
 function addEventoCarrito(){
-/*     console.log("boton presionado", producto.id);
-    const mibtnBorrar = document.getElementById(`btnBorrar${producto.id}`);  
-    mibtnBorrar.addEventListener("click", () => {    
-        console.log("boton presionado", producto.id); 
-        eliminarProductoCarrito(producto.id)
-          cargarCarritoCompras();
-    }); */
     addEventoEliminar();
     addEventoPagarCarrito();
     addEventoMasMenos();
