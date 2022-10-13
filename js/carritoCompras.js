@@ -5,6 +5,9 @@ function cargarCarritoCompras(){
     <div class="col-sm-12 col-md-6 col-lg-12 m-0 p-0 flex-row " id="boxCarrito">
          
     </div>
+    <div class="d-flex justify-content-end">
+      <a href="#" class="btn btn-success fw-bold btn-lg w-25" id="btnActualizarValor">Actualizar Valores</a>
+    </div>
     <div class="card m-2">
       <div class="card-body text-center d-grid gap-2">
         <div class="d-flex justify-content-between">
@@ -57,37 +60,86 @@ function cargarProductosCarrito(){
 
       
   });
- // addEventoCarrito();
+ addEventoCarrito();
 }
 
 function addEventoCarrito(){
-    addEventoEliminar();
-    addEventoPagarCarrito();
+/*     addEventoEliminar();
+    addEventoPagarCarrito(); */
     addEventoMasMenos();
+    addEventoActualizarValor();
 }
+
+const addEventoActualizarValor=()=>{
+
+  const btnActualizarValor=document.getElementById("btnActualizarValor");
+  btnActualizarValor.addEventListener("click", async()=>{
+
+    if (isAuth()) {     
+
+      let cambioValor=0;
+      console.log(carrito.length);
+      for(const producto of carrito){
+        const itemNro=document.getElementById(`itemNroCarrito${producto.product.id}`);
+        if(Number(itemNro.innerText)!==producto.quantity){
+          
+          const productCarrito=
+          {
+              "product_id":producto.product.id,
+              "quantity":Number(itemNro.innerText)
+          }
+          console.log(productCarrito)
+          const response = await CreateUpdateCarrito(productCarrito,GetToken());
+          if (response.status === 200) {
+              cambioValor=1;          
+              
+          } else {
+              cambioValor=2;
+          }
+          console.log(cambioValor);
+        }
+      }
+
+      console.log(cambioValor);
+      if(cambioValor===0) alertPersonalizado("No se encontraron cambios", true)
+      else if(cambioValor===1) {
+        alertPersonalizado("Se actualizaron los valores", true)
+        cargarCarritoCompras();
+      }
+      else alertPersonalizado("Hubo un error al actualizar el carrito", false)
+   
+
+  }else{
+      rejectAuth("Debe Logearse para añadir productos a su carrito");
+  }
+
+
+  });
+
+  }
 
 function addEventoMasMenos(){
   carrito.forEach((producto,index)=>{  
-    const miBtnMas = document.getElementById(`btnAumentar${producto.id}`);  
-    const miBtnMenos = document.getElementById(`btnDisminuir${producto.id}`);  
+    const miBtnMas = document.getElementById(`btnAumentar${producto.product.id}`);  
+    const miBtnMenos = document.getElementById(`btnDisminuir${producto.product.id}`);  
     miBtnMas.addEventListener("click", () => {    
-      const itemNro=document.getElementById(`itemNroCarrito${producto.id}`);
+      const itemNro=document.getElementById(`itemNroCarrito${producto.product.id}`);
       itemNro.innerText=Number(itemNro.innerText)+1;
-      producto.cantidad+=1;
-      reCalculoMonto();
+      //producto.cantidad+=1;
+/*       reCalculoMonto();
       const subTotal=document.getElementById(`subtotalCarrito${producto.id}`);
-      subTotal.innerText=producto.price*producto.cantidad;
+      subTotal.innerText=producto.price*producto.cantidad; */
 
     });    
     miBtnMenos.addEventListener("click", () => {    
-      const itemNro=document.getElementById(`itemNroCarrito${producto.id}`);
+      const itemNro=document.getElementById(`itemNroCarrito${producto.product.id}`);
     
       if(Number(itemNro.innerText)-1>=1){
         itemNro.innerText=Number(itemNro.innerText)-1;
-        producto.cantidad-=1;
+/*         producto.cantidad-=1;
         reCalculoMonto();
         const subTotal=document.getElementById(`subtotalCarrito${producto.id}`);
-        subTotal.innerText=producto.price*producto.cantidad;
+        subTotal.innerText=producto.price*producto.cantidad; */
       }
 
   });   
@@ -142,6 +194,7 @@ const reCalculoMonto=(data,subtotal,igv,total)=>{
 }
 
 const leerCarrito=async()=>{
+  console.log("leyendo carrito")
   const responseCarrito = await GetCarrito(GetToken());
   if (responseCarrito.status === 200) {
       console.log(responseCarrito.data);
