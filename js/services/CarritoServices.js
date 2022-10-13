@@ -25,8 +25,22 @@ const CreateUpdateCarrito = async (productCarrito, token) => {
 };
 
 const DeleteCarrito = async (id, token) => {
-  const response = await fetch(`${API_URL}/categories/${id}`, {
+  const response = await fetch(`${API_URL}/shopping_carts/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  const status = response.status;
+  const data = await response.json();
+  return { data, status };
+};
+
+//orden de pago
+
+const GenerarOrdenPago = async (token) => {
+  const response = await fetch(`${API_URL}/orders`, {
+    method: "POST",
     headers: {
       Authorization: "Bearer " + token,
     },
