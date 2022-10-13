@@ -80,7 +80,7 @@ const cargarRegistrarse = () => {
 }
 
 const iniciarLogin = () => {
-  checkLogin == 1 && cerrarSesion();
+  checkLogin == 1 && SignOut();
   cargarLogin();
   const btnLogin = document.getElementById("btnLogin");
   const btnRegister = document.getElementById("btnRegistrarse");
@@ -155,13 +155,16 @@ const alertPersonalizado = (mensaje, isCorrecto) => {
 }
 
 const cerrarSesion = () => {
-/*   const menuAdmin = document.getElementById("menuAdmin");
+  const menuAdmin = document.getElementById("menuAdmin");
   menuAdmin.setAttribute("style", "display:none");
   const textoSesion = document.getElementById("textoSesion");
   textoSesion.innerText = "Inicia Sesión";
   const textoPerfil = document.getElementById("textoPerfil");
-  textoPerfil.innerText = "Hola"; */
-  SignOut();
+  textoPerfil.innerText = "Hola";
+  const badgeCarrito=document.getElementById("badgeCarrito");
+  badgeCarrito.innerText="0";
+  const textoTotal = document.getElementById("textoTotal");   
+  textoTotal.innerText="0.00";
 }
 
 function loginExitoso(rol_id, nombrePerfil) {
@@ -173,4 +176,5 @@ function loginExitoso(rol_id, nombrePerfil) {
   const textoPerfil = document.getElementById("textoPerfil");
   textoPerfil.innerText = nombrePerfil;
   checkLogin = 1;
+  leerCarrito();
 }

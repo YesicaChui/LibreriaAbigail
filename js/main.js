@@ -34,7 +34,7 @@ const addEventos = (productos) => {
     productos.forEach((producto) => {
         const btnDisminuir = document.getElementById(`btnDisminuir${producto.id}`);
         const btnAumentar = document.getElementById(`btnAumentar${producto.id}`);
-        const btnAgregaProuctoCarrito = document.getElementById(`btnAgregarProductoCarrito${producto.id}`);
+        const btnAgregaProductoCarrito = document.getElementById(`btnAgregarProductoCarrito${producto.id}`);
         btnDisminuir.addEventListener("click", () => {
             const itemNro = document.getElementById(`itemNro${producto.id}`);
 
@@ -45,16 +45,44 @@ const addEventos = (productos) => {
             const itemNro = document.getElementById(`itemNro${producto.id}`);
             itemNro.innerText = Number(itemNro.innerText) + 1;
         })
-        btnAgregaProuctoCarrito.addEventListener("click", () => {
-
-            const itemNro = Number(document.getElementById(`itemNro${producto.id}`).innerText);
-            const textoTotal = document.getElementById("textoTotal");
-            addCarrito(producto, itemNro);
-            console.log(carrito);
-            textoTotal.innerText = carrito.reduce((acumulador, elemento) => acumulador + elemento.price * elemento.cantidad, 0);
+        btnAgregaProductoCarrito.addEventListener("click", async () => {
+            if (isAuth()) {
+                const itemNro = Number(document.getElementById(`itemNro${producto.id}`).innerText);
+                const indexProductCarrito = carrito.findIndex((elemento) => {
+                    return elemento.product.id === producto.id;
+                  });
+                const productCarrito=indexProductCarrito>=0?
+                {
+                    "product_id":producto.id,
+                    "quantity":itemNro+carrito[indexProductCarrito].quantity
+                }:
+                {
+                    "product_id":producto.id,
+                    "quantity":itemNro
+                }
+                console.log(productCarrito);
+                const response = await CreateUpdateCarrito(productCarrito,GetToken());
+                if (response.status === 200) {
+                    leerCarrito();
+                    alertPersonalizado("Se añadio el producto al carrito", true);
+                } else {
+                    alertPersonalizado("Error al insertar al carrito", false);
+                }
+            }else{
+                rejectAuth("Debe Logearse para añadir productos a su carrito");
+            }
         })
 
     })
+}
+
+const rejectAuth=(msg)=>{
+    checkLogin==1?
+    alertPersonalizado("Su Sesión ha expirado vuelva a logearse para continuar", false):
+    alertPersonalizado(msg, false)
+    checkLogin=0;
+    cerrarSesion();
+    iniciarLogin();
 }
 
 function addCarrito(producto, itemNro) {
@@ -67,31 +95,15 @@ function addCarrito(producto, itemNro) {
         producto.cantidad = itemNro;
         carrito.push(producto);
     }
-    /*     for(let i=1;i<=itemNro;i++)
-            carrito.push(producto); */
-    // badgeCarrito.innerText=carrito.length;
+
     badgeCarrito.innerText = carrito.reduce((acumulador, elemento) => acumulador + elemento.cantidad, 0);
 }
 
-/* function addCarrito(...argumentos){
-    const badgeCarrito=document.getElementById("badgeCarrito");
-    for(let i=1;i<=argumentos[1];i++)
-        carrito.push(argumentos[0]);
-    badgeCarrito.innerText=carrito.length;
-} */
+
 function filtrarProductos(inputProducto) {
     //    const filtrados = listaProductos.filter((producto)=>producto.name.toUpperCase().indexOf(inputProducto.toUpperCase())!==-1);
     const filtrados = listaProductos.filter((producto) => producto.name.toUpperCase().includes(inputProducto.toUpperCase()));
     cargarProductos(filtrados);
-}
-
-function mostrarCarritoAlert() {
-    let textProductos = "";
-    carrito.forEach((producto, index) => {
-        textProductos += `${index + 1}.${producto.name} precio: ${producto.price}\n`;
-    });
-    textProductos += "\n EL TOTAL A PAGAR ES: " + carrito.reduce((acumulador, elemento) => acumulador + elemento.price, 0);
-    alert(`Los productos Seleccionados para la compra son:\n\n ${textProductos} `)
 }
 
 let carrito = [];
@@ -111,7 +123,6 @@ inputProducto.addEventListener("keydown", () => {
 
 const btnCarrito = document.getElementById("btnCarrito");
 btnCarrito.addEventListener("click", () => {
-    // mostrarCarritoAlert();
     cargarCarritoCompras();
 });
 
@@ -142,13 +153,14 @@ menuCategorias.addEventListener("click", () => {
 })
 
 cargarPintar();
-const verificarLogin = async()=>{
-    if(isAuth()){       
+const verificarLogin = async () => {
+    if (isAuth()) {
         const response2 = await GetUserProfile(GetToken());
-        if (response2.status === 200) {         
-          loginExitoso(response2.data.data.role.id,response2.data.data.username);
+        if (response2.status === 200) {
+            loginExitoso(response2.data.data.role.id, response2.data.data.username);
+
         } else {
-          alertPersonalizado("Error leyendo el userProfile", false);
+            alertPersonalizado("Error leyendo el userProfile", false);
         }
     }
 }
