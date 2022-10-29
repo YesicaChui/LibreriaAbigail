@@ -38,7 +38,7 @@ const isAuth = () => {
 
 const SignOut = () => {
   window.localStorage.removeItem("token");
-  return (window.location.href = "/");
+  return (window.location.href = "/LibreriaAbigail");
 };
 
 const GetToken = () => {
